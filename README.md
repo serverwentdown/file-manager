@@ -5,6 +5,7 @@ A basic node.js file manager.
 
 ## Features
 
+- [x] [Simple authentication](https://github.com/ambrosechua/file-manager#key)
 - [x] Directory browsing
   - [x] Filesize
   - [ ] Permissions
@@ -17,6 +18,18 @@ A basic node.js file manager.
   - [x] Delete
   - [x] Download archive
   - [ ] Change permissions
+  
+## Screenshots
+
+![](https://ambrose.makerforce.io/file-manager/login.png)
+
+![](https://ambrose.makerforce.io/file-manager/upl2.png)
+
+![](https://ambrose.makerforce.io/file-manager/ls1.png)
+
+![](https://ambrose.makerforce.io/file-manager/rm1.png)
+
+![](https://ambrose.makerforce.io/file-manager/dl1.png)
 
 ## Usage
 
@@ -32,14 +45,14 @@ file-manager
 
 Options are currently only suppliable via ENV variables. 
 
-### PORT=<port>
+### PORT=
 
-Listen on <port>
+Listen on $PORT. Default: 8080
 
-### KEY=<key>
+### KEY=
 
 Setting this variable enables authentication using 
-TOTP (RFC6238). <key> is a base32 encoded shared 
+TOTP (RFC6238). $KEY is a base32 encoded shared 
 secret. This key is only a weak means of protection 
 as it is succeptable to brute-force. You can generate 
 one from [here](http://www.xanxys.net/totp/) or manually. 
