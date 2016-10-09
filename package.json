@@ -1,6 +1,9 @@
 {
-  "name": "yourdump",
+  "name": "file-manager",
   "description": "A simple file manager",
+  "bin": {
+    "file-manager": "./index.js"
+  },
   "dependencies": {
     "archiver": "^1.1.0",
     "body-parser": "^1.15.2",
