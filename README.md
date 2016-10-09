@@ -24,7 +24,7 @@ A basic node.js file manager.
   
 ## Screenshots
 
-![](https://ambrose.makerforce.io/file-manager/login.png)
+![](https://ambrose.makerforce.io/file-manager/login1.png)
 
 ![](https://ambrose.makerforce.io/file-manager/upl2.png)
 
