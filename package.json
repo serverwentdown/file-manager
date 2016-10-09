@@ -1,6 +1,7 @@
 {
   "name": "file-manager",
   "description": "A simple file manager",
+  "version": "0.0.2a",
   "bin": {
     "file-manager": "./index.js"
   },
