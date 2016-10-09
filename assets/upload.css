@@ -1,0 +1,7 @@
+.custom-file-control.file-selected:after {
+	display: none;
+}
+.custom-file-control {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

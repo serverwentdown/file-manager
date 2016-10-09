@@ -1,0 +1,25 @@
+<form action="@delete" method="post">
+	<div id="delete" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Are you sure?</h4>
+				</div>
+				<div class="modal-body">
+					<p>You are deleting the following files: </p>
+					<ul class="list-group multi-files">
+						
+					</ul>
+					<input type="hidden" name="files" value="" class="multi-files-value" />
+				</div>
+				<div class="modal-footer">
+					<button type="reset" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

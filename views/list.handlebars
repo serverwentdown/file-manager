@@ -1,0 +1,42 @@
+{{> navbar path=path}}
+
+<main class="container" style="margin-top: 64px; margin-bottom: 64px;">
+	{{#each errors as |error|}}
+		<div class="alert alert-danger" role="alert">
+			{{error}}
+		</div>
+	{{/each}}
+	{{#each successes as |success|}}
+		<div class="alert alert-success" role="alert">
+			{{success}}
+		</div>
+	{{/each}}
+	<ul class="list-group">
+	{{#each files}}
+		<li class="list-group-item">
+			<label class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input multi-select" data-select="{{name}}">
+				<span class="custom-control-indicator"></span>
+			</label>
+		{{#if isdirectory}}
+			<a href="{{name}}/">{{name}}/</a>
+		{{else}}
+			<a href="{{name}}">{{name}}</a>
+			<span class="tag tag-default tag-pill pull-xs-right">{{size}}</span>
+		{{/if}}
+		</li>
+	{{else}}
+		<li class="list-group-item">
+			No files
+		</li>
+	{{/each}}
+	</ul>
+</main>
+
+{{> toolbar}}
+
+{{> dialogue-upload}}
+{{> dialogue-mkdir}}
+
+{{> dialogue-download}}
+{{> dialogue-delete}}
