@@ -17,6 +17,8 @@ A basic node.js file manager.
 - [x] Bulk file/folder selection
   - [x] Delete
     - [ ] Recursive directory delete
+  - [ ] Move
+  - [ ] Copy
   - [x] Download archive
   - [ ] Change permissions
   
