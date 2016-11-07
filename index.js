@@ -193,6 +193,7 @@ app.post("/*@upload", (req, res) => {
 			});
 			stream.on("end", () => {
 				buff = Buffer.concat(buffs);
+				buffs = null;
 			});
 		}
 	});
@@ -226,6 +227,7 @@ app.post("/*@upload", (req, res) => {
 					req.flash("success", "File saved. Warning: empty file.");
 				}
 				else {
+					buff = null;
 					req.flash("success", "File saved. ");
 				}
 				res.redirect("back");
