@@ -4,4 +4,6 @@
 .custom-file-control {
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-right: 5.4em;
 }
