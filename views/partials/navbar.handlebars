@@ -1,25 +1,26 @@
-<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
+<nav class="navbar navbar-dark bg-primary fixed-top navbar-expand-sm">
 	<a class="navbar-brand" href="/">File Manager</a>
-	<ul class="nav navbar-nav">
-		{{#eachpath path}}
-		<li class="nav-item{{#if current}} active{{/if}}">
-			<a class="nav-link" href="{{path}}">{{name}}</a>
-		</li>
-		{{/eachpath}}
-	</ul>
-	<ul class="nav navbar-nav pull-xs-right">
-		<li class="nav-item">
-			{{#if isloginenabled}}
-			{{#if isloggingin}}
-				<a class="nav-link" href="/@login" title="Sign in">
-					<span class="octicon octicon-sign-in"></span>
-				</a>
-			{{else}}
-				<a class="nav-link" href="/@logout" title="Sign out">
-					<span class="octicon octicon-sign-out"></span>
-				</a>
-			{{/if}}
-			{{/if}}
-		</li>
-	</ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav mr-auto">
+            {{#eachpath path}}
+                <a class="nav-item nav-link{{#if current}} active{{/if}}" href="{{path}}">{{name}}</a>
+            {{/eachpath}}
+        </div>
+        <div class="navbar-nav">
+            {{#if isloginenabled}}
+            {{#if isloggingin}}
+                <a class="nav-item nav-link" href="/@login" title="Sign in">
+                    <span class="octicon octicon-sign-in"></span>
+                </a>
+            {{else}}
+                <a class="nav-item nav-link" href="/@logout" title="Sign out">
+                    <span class="octicon octicon-sign-out"></span>
+                </a>
+            {{/if}}
+            {{/if}}
+        </div>
+    </div>
 </nav>

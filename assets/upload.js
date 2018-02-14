@@ -8,7 +8,7 @@ $(document).ready(() => {
 	
 	$file.on("change", () => {
 		let file = $file[0].files[0];
-		let fnElement = $file.parent().find(".custom-file-control");
+		let fnElement = $file.parent().find(".custom-file-label");
 		fnElement.addClass("file-selected");
 		fnElement.text(file.name);
 
