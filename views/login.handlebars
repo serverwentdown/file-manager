@@ -1,7 +1,8 @@
 {{> navbar isloggingin=true}}
 
-<main class="container" style="margin-top: 64px; margin-bottom: 64px;">
-	<div class="login text-nowrap mx-auto">
+<div style="padding-top: 56px; padding-bottom: 56px;">
+<main class="container my-4">
+	<div class="login mx-auto">
 		{{#each errors as |error|}}
 			<div class="alert alert-danger" role="alert">
 				{{error}}
@@ -12,21 +13,20 @@
 				{{success}}
 			</div>
 		{{/each}}
-		<div class="card">
-			<form class="card-block" action="/@login" method="post">
-				<div class="form-group">
-					<label>Token:</label>
-					<div class="input-group input-group-lg input-group-digits">
-						<input type="number" class="form-control" placeholder="&bull;" />
-						<input type="number" class="form-control" placeholder="&bull;" />
-						<input type="number" class="form-control" placeholder="&bull;" />
-						<input type="number" class="form-control" placeholder="&bull;" />
-						<input type="number" class="form-control" placeholder="&bull;" />
-						<input type="number" class="form-control" placeholder="&bull;" />
-					</div>
-					<input name="token" id="login-token-value" type="hidden" />
-				</div>
-			</form>
-		</div>
+        <form class="py-4" action="/@login" method="post">
+            <h4>One-time token:</h4>
+            <div class="form-group">
+                <div class="input-group input-group-lg input-group-digits">
+                    <input type="number" class="form-control" placeholder="&bull;" />
+                    <input type="number" class="form-control" placeholder="&bull;" />
+                    <input type="number" class="form-control" placeholder="&bull;" />
+                    <input type="number" class="form-control" placeholder="&bull;" />
+                    <input type="number" class="form-control" placeholder="&bull;" />
+                    <input type="number" class="form-control" placeholder="&bull;" />
+                </div>
+                <input name="token" id="login-token-value" type="hidden" />
+            </div>
+        </form>
 	</div>
 </main>
+</div>

@@ -65,7 +65,7 @@ app.use(bodyparser.urlencoded());
 
 // AUTH
 
-const KEY = process.env.KEY ? base32.decode(process.env.KEY) : null;
+const KEY = process.env.KEY ? base32.decode(process.env.KEY.replace(/ /g, "")) : null;
 
 app.get("/@logout", (req, res) => {
 	if (KEY) {
