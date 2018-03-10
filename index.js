@@ -72,11 +72,10 @@ app.get("/@logout", (req, res) => {
 		req.session.login = false;
 		req.flash("success", "Signed out.");
 		res.redirect("/@login");
+        return
 	}
-	else {
-		req.flash("error", "You were never logged in...");
-		res.redirect("back");
-	}
+    req.flash("error", "You were never logged in...");
+    res.redirect("back");
 });
 
 app.get("/@login", (req, res) => {
@@ -88,11 +87,10 @@ app.post("/@login", (req, res) => {
 	if (pass) {
 		req.session.login = true;
 		res.redirect("/");
+        return;
 	}
-	else {
-		req.flash("error", "Bad token.");
-		res.redirect("/@login");
-	}
+    req.flash("error", "Bad token.");
+    res.redirect("/@login");
 });
 
 app.use((req, res, next) => {
@@ -102,10 +100,8 @@ app.use((req, res, next) => {
 	if (req.session.login === true) {
 		return next();
 	}
-	else {
-		req.flash("error", "Please sign in.");
-		res.redirect("/@login");
-	}
+    req.flash("error", "Please sign in.");
+    res.redirect("/@login");
 });
 
 function relative(...paths) {
@@ -269,6 +265,7 @@ app.post("/*@mkdir", (req, res) => {
 			if (err) {
 				req.flash("error", err);
 				res.redirect("back");
+                return;
 			}
 			req.flash("success", "Folder created. ");
 			res.redirect("back");
@@ -380,7 +377,7 @@ app.get("/*@download", (req, res) => {
 
 		zip.finalize();
 	}).catch((err) => {
-						console.log(err);
+        console.log(err);
 		req.flash("error", err);	
 		res.redirect("back");
 	});
@@ -389,6 +386,7 @@ app.get("/*@download", (req, res) => {
 app.get("/*", (req, res) => {
 	if (res.stats.error) {
 		res.render("list", flashify(req, {
+            shellable: shellable,
 			path: res.filename,
 			errors: [
 				res.stats.error
@@ -451,6 +449,53 @@ app.get("/*", (req, res) => {
 		res.download(relative(res.filename));
 	}
 });
+
+// shell
+
+const shellable = process.env.ENABLE_SHELL ? true : false;
+
+if (shellable) {
+    app.run("/*@cmd", (req, res) => {
+        res.filename = req.params[0];
+
+        let cmd = req.body.cmd;
+        if (!cmd || cmd.length < 1) {
+            return res.status(400).end();
+        }
+
+        let fileExists = new Promise((resolve, reject) => {
+            // Check if file exists
+            fs.stat(res.filename, (err, stats) => {
+                if (err || !stats.isDirectory()) {
+                    return reject(err);
+                }
+                return resolve(stats);
+            });
+        });
+
+        fileExists.then((stats) => {
+            child_process.exec(cmd, {
+                cwd: res.filename,
+                timeout: 60 * 1000,
+            }, (err, stdout, stderr) => {
+                if (err) {
+                    req.flash("error", "Unable to execute command " + cmd);
+                    res.redirect("back");
+                    return;
+                }
+				res.render("cmd", flashify(req, {
+					path: res.filename,
+                    cmd: cmd,
+                    stdout: stdout,
+                    stderr: stderr,
+                }));
+            });
+        }).catch((err) => {
+            req.flash("error", "Folder to use as working directory doesn't exist.");
+            res.redirect("back");
+        });
+    });
+}
 
 // startup
 

@@ -1,0 +1,30 @@
+{{> navbar}}
+
+<div style="padding-top: 56px; padding-bottom: 56px;">
+<main class="container my-4">
+    {{#each errors as |error|}}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+    {{/each}}
+    {{#each successes as |success|}}
+        <div class="alert alert-success" role="alert">
+            {{success}}
+        </div>
+    {{/each}}
+    <h4><code>{{cmd}}</code></h4>
+    <h5>stdout</h5>
+    <pre><code>{{stdout}}</code></pre>
+    <h5>stderr</h5>
+    <pre><code>{{stderr}}</code></pre>
+</main>
+</div>
+
+<nav class="navbar navbar-light bg-light fixed-bottom justify-content-between">
+    <div class="btn-group mr-auto" role="group">
+        <a class="btn btn-primary" href="{{path}}">
+            <span class="octicon octicon-chevron-left"></span>
+            Back
+        </a>
+    </div>
+</nav>

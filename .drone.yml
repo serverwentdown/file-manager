@@ -1,0 +1,7 @@
+pipeline:
+  docker:
+    image: plugins/docker
+    registry: registry.labs.0x.no
+    repo: registry.labs.0x.no/file-manager
+    tags:
+      - latest
