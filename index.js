@@ -474,8 +474,6 @@ if (shellable) {
         }, (err, stdout, stderr) => {
             if (err) {
                 req.flash("error", "Unable to execute command " + cmd);
-                res.redirect("back");
-                return;
             }
             res.render("cmd", flashify(req, {
                 path: res.filename,
