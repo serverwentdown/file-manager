@@ -425,11 +425,13 @@ app.get("/*", (req, res) => {
 
 			Promise.all(promises).then((files) => {
 				res.render("list", flashify(req, {
+                    shellable: shellable,
 					path: res.filename,
 					files: files,
 				}));	
 			}).catch((err) => {
 				res.render("list", flashify(req, {
+                    shellable: shellable,
 					path: res.filename,
 					errors: [
 						err
@@ -438,6 +440,7 @@ app.get("/*", (req, res) => {
 			});
 		}).catch((err) => {
 			res.render("list", flashify(req, {
+                shellable: shellable,
 				path: res.filename,
 				errors: [
 					err
@@ -452,10 +455,12 @@ app.get("/*", (req, res) => {
 
 // shell
 
-const shellable = process.env.ENABLE_SHELL ? true : false;
+const shellable = process.env.ENABLE_SHELL == "true" ? true : false;
 
 if (shellable) {
-    app.run("/*@cmd", (req, res) => {
+    const child_process = require("child_process");
+
+    app.post("/*@cmd", (req, res) => {
         res.filename = req.params[0];
 
         let cmd = req.body.cmd;
@@ -463,36 +468,21 @@ if (shellable) {
             return res.status(400).end();
         }
 
-        let fileExists = new Promise((resolve, reject) => {
-            // Check if file exists
-            fs.stat(res.filename, (err, stats) => {
-                if (err || !stats.isDirectory()) {
-                    return reject(err);
-                }
-                return resolve(stats);
-            });
-        });
-
-        fileExists.then((stats) => {
-            child_process.exec(cmd, {
-                cwd: res.filename,
-                timeout: 60 * 1000,
-            }, (err, stdout, stderr) => {
-                if (err) {
-                    req.flash("error", "Unable to execute command " + cmd);
-                    res.redirect("back");
-                    return;
-                }
-				res.render("cmd", flashify(req, {
-					path: res.filename,
-                    cmd: cmd,
-                    stdout: stdout,
-                    stderr: stderr,
-                }));
-            });
-        }).catch((err) => {
-            req.flash("error", "Folder to use as working directory doesn't exist.");
-            res.redirect("back");
+        child_process.exec(cmd, {
+            cwd: res.filename,
+            timeout: 60 * 1000,
+        }, (err, stdout, stderr) => {
+            if (err) {
+                req.flash("error", "Unable to execute command " + cmd);
+                res.redirect("back");
+                return;
+            }
+            res.render("cmd", flashify(req, {
+                path: res.filename,
+                cmd: cmd,
+                stdout: stdout,
+                stderr: stderr,
+            }));
         });
     });
 }

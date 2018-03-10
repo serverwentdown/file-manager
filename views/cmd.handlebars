@@ -22,9 +22,15 @@
 
 <nav class="navbar navbar-light bg-light fixed-bottom justify-content-between">
     <div class="btn-group mr-auto" role="group">
-        <a class="btn btn-primary" href="{{path}}">
+        <a class="btn btn-primary" href="/{{path}}">
             <span class="octicon octicon-chevron-left"></span>
-            Back
+            Back to file list
+        </a>
+        <a class="btn btn-warning" href="@cmd" data-toggle="modal" data-target="#cmd">
+            <span class="octicon octicon-terminal"></span>
+            Run command
         </a>
     </div>
 </nav>
+
+{{> dialogue-cmd}}
