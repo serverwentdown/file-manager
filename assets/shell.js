@@ -2,9 +2,10 @@
 
 $(document).ready(() => {
     let $shell = $("#shell");
-    if (!$shell) {
+    if ($shell.length < 1) {
         return;
     }
+    let $close = $(".shell-close");
 
     let closeTimeout = null;
 
@@ -88,6 +89,10 @@ $(document).ready(() => {
         closeTimeout = setTimeout(() => {
             window.location.pathname = window.location.pathname.replace("@shell", "");
         }, 2000);
+    });
+
+    $close.click(() => {
+        socket.disconnect();
     });
 
 });
