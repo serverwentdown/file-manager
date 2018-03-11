@@ -403,7 +403,7 @@ if (shellable || cmdable) {
 
         child_process.exec(cmd, {
             shell: shell,
-            cwd: res.filename,
+            cwd: relative(res.filename),
             timeout: 60 * 1000,
         }, (err, stdout, stderr) => {
             if (err) {
@@ -430,7 +430,7 @@ if (shellable || cmdable) {
     });
 
     io.on("connection", (socket) => {
-        let cwd = socket.handshake.query.path;
+        let cwd = relative(socket.handshake.query.path);
 
         let term = pty.spawn(exec, args, {
             name: "xterm-256color",
