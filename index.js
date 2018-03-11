@@ -22,6 +22,7 @@ const path = require("path");
 const filesize = require("filesize");
 
 let app = express();
+let http = app.listen(process.env.PORT || 8080);
 
 app.set("views", path.join(__dirname, "views"));
 app.engine("handlebars", hbs({
@@ -72,10 +73,10 @@ app.get("/@logout", (req, res) => {
 		req.session.login = false;
 		req.flash("success", "Signed out.");
 		res.redirect("/@login");
-        return
+		return
 	}
-    req.flash("error", "You were never logged in...");
-    res.redirect("back");
+	req.flash("error", "You were never logged in...");
+	res.redirect("back");
 });
 
 app.get("/@login", (req, res) => {
@@ -87,10 +88,10 @@ app.post("/@login", (req, res) => {
 	if (pass) {
 		req.session.login = true;
 		res.redirect("/");
-        return;
+		return;
 	}
-    req.flash("error", "Bad token.");
-    res.redirect("/@login");
+	req.flash("error", "Bad token.");
+	res.redirect("/@login");
 });
 
 app.use((req, res, next) => {
@@ -100,8 +101,8 @@ app.use((req, res, next) => {
 	if (req.session.login === true) {
 		return next();
 	}
-    req.flash("error", "Please sign in.");
-    res.redirect("/@login");
+	req.flash("error", "Please sign in.");
+	res.redirect("/@login");
 });
 
 function relative(...paths) {
@@ -130,7 +131,7 @@ app.all("/*", (req, res, next) => {
 	res.filename = req.params[0];
 
 	let fileExists = new Promise((resolve, reject) => {
-		// Check if file exists
+		// check if file exists
 		fs.stat(relative(res.filename), (err, stats) => {
 			if (err) {
 				return reject(err);
@@ -148,7 +149,7 @@ app.all("/*", (req, res, next) => {
 	});
 });
 
-// Currently unused
+// currently unused
 app.put("/*", (req, res) => {
 	if (res.stats.error) {
 		req.busboy.on("file", (key, file, filename) => {
@@ -203,7 +204,7 @@ app.post("/*@upload", (req, res) => {
 			return res.status(400).end();
 		}
 		let fileExists = new Promise((resolve, reject) => {
-			// Check if file exists
+			// check if file exists
 			fs.stat(relative(res.filename, saveas), (err, stats) => {
 				if (err) {
 					return reject(err);
@@ -265,7 +266,7 @@ app.post("/*@mkdir", (req, res) => {
 			if (err) {
 				req.flash("error", err);
 				res.redirect("back");
-                return;
+				return;
 			}
 			req.flash("success", "Folder created. ");
 			res.redirect("back");
@@ -377,16 +378,90 @@ app.get("/*@download", (req, res) => {
 
 		zip.finalize();
 	}).catch((err) => {
-        console.log(err);
+		console.log(err);
 		req.flash("error", err);	
 		res.redirect("back");
 	});
 });
 
+const shellable = process.env.SHELL != "false" && process.env.SHELL;
+if (shellable) {
+	const exec = process.env.SHELL == "login" ? "/usr/bin/env" : process.env.SHELL;
+	const args = process.env.SHELL == "login" ? ["login"] : [];
+
+	const child_process = require("child_process");
+
+    // currently unused
+	app.post("/*@cmd", (req, res) => {
+		res.filename = req.params[0];
+
+		let cmd = req.body.cmd;
+		if (!cmd || cmd.length < 1) {
+			return res.status(400).end();
+		}
+
+		child_process.exec(cmd, {
+			shell: shell,
+			cwd: res.filename,
+			timeout: 60 * 1000,
+		}, (err, stdout, stderr) => {
+			if (err) {
+				req.flash("error", "Command failed due to non-zero exit code");
+			}
+			res.render("cmd", flashify(req, {
+				path: res.filename,
+				cmd: cmd,
+				stdout: stdout,
+				stderr: stderr,
+			}));
+		});
+	});
+	
+	const pty = require("pty.js");
+	const io = require("socket.io")(http);
+
+	app.get("/*@shell", (req, res) => {
+		res.filename = req.params[0];
+
+		res.render("shell", flashify(req, {
+			path: res.filename,
+		}));
+	});
+
+	io.on("connection", (socket) => {
+		let cwd = socket.handshake.query.path;
+
+		let term = pty.spawn(exec, args, {
+			name: "xterm-256color",
+			cols: 80,
+			rows: 30,
+			cwd: cwd,
+		});
+        console.log("pid " + term.pid + " shell " + process.env.SHELL + " started in " + cwd);
+
+		term.on("data", (data) => {
+			socket.emit("output", data);
+		});
+		term.on("exit", (code) => {
+			console.log("pid " + term.pid + " ended")
+            socket.disconnect();
+		});
+		socket.on("resize", (data) => {
+			term.resize(data.col, data.row);
+		});
+		socket.on("input", (data) => {
+			term.write(data);
+		});
+		socket.on("disconnect", () => {
+			term.end();
+		});
+	});
+}
+
 app.get("/*", (req, res) => {
 	if (res.stats.error) {
 		res.render("list", flashify(req, {
-            shellable: shellable,
+			shellable: shellable,
 			path: res.filename,
 			errors: [
 				res.stats.error
@@ -425,13 +500,13 @@ app.get("/*", (req, res) => {
 
 			Promise.all(promises).then((files) => {
 				res.render("list", flashify(req, {
-                    shellable: shellable,
+					shellable: shellable,
 					path: res.filename,
 					files: files,
 				}));	
 			}).catch((err) => {
 				res.render("list", flashify(req, {
-                    shellable: shellable,
+					shellable: shellable,
 					path: res.filename,
 					errors: [
 						err
@@ -440,7 +515,7 @@ app.get("/*", (req, res) => {
 			});
 		}).catch((err) => {
 			res.render("list", flashify(req, {
-                shellable: shellable,
+				shellable: shellable,
 				path: res.filename,
 				errors: [
 					err
@@ -453,38 +528,3 @@ app.get("/*", (req, res) => {
 	}
 });
 
-// shell
-
-const shellable = process.env.ENABLE_SHELL == "true" ? true : false;
-
-if (shellable) {
-    const child_process = require("child_process");
-
-    app.post("/*@cmd", (req, res) => {
-        res.filename = req.params[0];
-
-        let cmd = req.body.cmd;
-        if (!cmd || cmd.length < 1) {
-            return res.status(400).end();
-        }
-
-        child_process.exec(cmd, {
-            cwd: res.filename,
-            timeout: 60 * 1000,
-        }, (err, stdout, stderr) => {
-            if (err) {
-                req.flash("error", "Command failed due to non-zero exit code");
-            }
-            res.render("cmd", flashify(req, {
-                path: res.filename,
-                cmd: cmd,
-                stdout: stdout,
-                stderr: stderr,
-            }));
-        });
-    });
-}
-
-// startup
-
-app.listen(process.env.PORT || 8080);

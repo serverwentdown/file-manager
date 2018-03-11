@@ -50,9 +50,9 @@ file-manager
 
 Options are currently only suppliable via ENV variables. 
 
-### ENABLE_SHELL=
+### SHELL=
 
-Set to `true` to enable remote command execution. Be careful when enabling this feature. 
+Set to `login` to enable accessing a login shell, or your shell binary (example: `bash`). Be careful when enabling this feature. 
 
 ### PORT=
 
