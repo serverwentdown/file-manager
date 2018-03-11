@@ -22,6 +22,7 @@ A basic node.js file manager.
   - [ ] Copy
   - [x] Download archive
   - [ ] Change permissions
+- [x] Remote commands
   
 ## Screenshots
 
@@ -48,6 +49,10 @@ file-manager
 ## Options
 
 Options are currently only suppliable via ENV variables. 
+
+### ENABLE_SHELL=
+
+Set to `true` to enable remote command execution. Be careful when enabling this feature. 
 
 ### PORT=
 
