@@ -2,17 +2,17 @@
 
 <div style="padding-top: 56px; padding-bottom: 56px;">
 <main class="container my-4">
-	<div class="login mx-auto">
-		{{#each errors as |error|}}
-			<div class="alert alert-danger" role="alert">
-				{{error}}
-			</div>
-		{{/each}}
-		{{#each successes as |success|}}
-			<div class="alert alert-success" role="alert">
-				{{success}}
-			</div>
-		{{/each}}
+    <div class="login mx-auto">
+        {{#each errors as |error|}}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        {{/each}}
+        {{#each successes as |success|}}
+            <div class="alert alert-success" role="alert">
+                {{success}}
+            </div>
+        {{/each}}
         <form class="py-4" action="/@login" method="post">
             <h4>One-time token:</h4>
             <div class="form-group">
@@ -27,6 +27,6 @@
                 <input name="token" id="login-token-value" type="hidden" />
             </div>
         </form>
-	</div>
+    </div>
 </main>
 </div>

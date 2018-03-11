@@ -1,7 +1,7 @@
 /* jshint esversion: 6 */
 
 $(document).ready(() => {
-	let $shell = $("#shell");
+    let $shell = $("#shell");
     if (!$shell) {
         return;
     }
