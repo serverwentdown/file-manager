@@ -8,11 +8,13 @@
             <span class="octicon octicon-file-directory"></span>
             New folder
         </a>
-        {{#if shellable}}
-        {{!-- <a class="btn btn-warning" href="@cmd" data-toggle="modal" data-target="#cmd">
+        {{#if cmdable}}
+        <a class="btn btn-warning" href="@cmd" data-toggle="modal" data-target="#cmd">
             <span class="octicon octicon-terminal"></span>
             Run command
-        </a> --}}
+        </a>
+        {{/if}}
+        {{#if shellable}}
         <a class="btn btn-warning" href="@shell">
             <span class="octicon octicon-terminal"></span>
             Open shell
