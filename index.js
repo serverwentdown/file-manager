@@ -473,7 +473,7 @@ if (shellable) {
             timeout: 60 * 1000,
         }, (err, stdout, stderr) => {
             if (err) {
-                req.flash("error", "Unable to execute command: " + err);
+                req.flash("error", "Command failed due to non-zero exit code");
             }
             res.render("cmd", flashify(req, {
                 path: res.filename,
