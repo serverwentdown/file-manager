@@ -54,6 +54,10 @@ Options are currently only suppliable via ENV variables.
 
 Set to `login` to enable accessing a login shell, or your shell binary (example: `bash`). Be careful when enabling this feature. 
 
+### CMD=
+
+Set to shell binary to enable an alternative command-based execution. Be careful when enabling this feature. 
+
 ### PORT=
 
 Listen on $PORT. Default: 8080
