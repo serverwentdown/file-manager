@@ -49,7 +49,7 @@ $(document).ready(() => {
             window.term = term;
             term.decorate(document.getElementById("shell"));
             // force custom size
-            $shell.find("iframe").css("height", "calc(100% - 52px * 2)");
+            $shell.find("iframe").css("height", "calc(100% - 56px * 2)");
 
             term.setCursorPosition(0, 0);
             term.setCursorVisible(true);

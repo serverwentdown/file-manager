@@ -6,13 +6,13 @@
 
 <nav class="navbar navbar-light bg-light fixed-bottom justify-content-between">
     <div class="btn-group mr-auto" role="group">
-        <a class="btn btn-primary" href="/{{path}}" class="shell-close">
+        <a class="btn btn-danger" href="/{{path}}" class="shell-close" data-placement="top" title="Close and return to folder">
             <span class="octicon octicon-chevron-left"></span>
-            Close shell
+            <span class="d-none d-sm-inline">Close shell</span>
         </a>
-        <a class="btn btn-warning" href="@shell" target="_blank">
+        <a class="btn btn-warning" href="@shell" target="_blank" data-placement="top" title="Open shell in new tab">
             <span class="octicon octicon-terminal"></span>
-            New shell
+            <span class="d-none d-sm-inline">New shell</span>
         </a>
     </div>
 </nav>

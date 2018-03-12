@@ -1,42 +1,44 @@
-<nav class="navbar navbar-light bg-light fixed-bottom justify-content-between">
-    <div class="btn-group mr-2" role="group">
-        <a class="btn btn-primary" href="@upload" data-toggle="modal" data-target="#upload">
+<nav class="navbar navbar-light bg-light fixed-bottom p-1 px-2">
+    <div class="btn-group m-1" role="group">
+        <a class="btn btn-primary" href="@upload" data-toggle="modal" data-target="#upload" data-placement="top" title="Upload">
             <span class="octicon octicon-cloud-upload"></span>
-            Upload
+            <span class="d-none d-sm-inline">Upload</span>
         </a>
-        <a class="btn btn-secondary" href="@mkdir" data-toggle="modal" data-target="#mkdir">
+        <a class="btn btn-secondary" href="@mkdir" data-toggle="modal" data-target="#mkdir" data-placement="top" title="New folder">
             <span class="octicon octicon-file-directory"></span>
-            New folder
+            <span class="d-none d-md-inline">New folder</span>
         </a>
+    </div>
+    <div class="btn-group m-1" role="group">
         {{#if cmdable}}
-        <a class="btn btn-warning" href="@cmd" data-toggle="modal" data-target="#cmd">
+        <a class="btn btn-warning" href="@cmd" data-toggle="modal" data-target="#cmd" data-placement="top" title="Run command">
             <span class="octicon octicon-terminal"></span>
-            Run command
+            <span class="d-none d-md-inline">Run command</span>
         </a>
         {{/if}}
         {{#if shellable}}
-        <a class="btn btn-warning" href="@shell">
+        <a class="btn btn-warning" href="@shell" data-placement="top" title="Open shell">
             <span class="octicon octicon-terminal"></span>
-            Open shell
+            <span class="d-none d-md-inline">Open shell</span>
         </a>
         {{/if}}
     </div>
-    <div class="btn-group mr-2" role="group">
-        <a class="btn btn-success" href="@download" data-toggle="modal" data-target="#download">
+    <div class="btn-group m-1" role="group">
+        <a class="btn btn-success" href="@download" data-toggle="modal" data-target="#download" data-placement="top" title="Download files as zip">
             <span class="octicon octicon-file-zip"></span>
-            Download
+            <span class="d-none d-md-inline">Download</span>
         </a>
     </div>
-    <div class="btn-group mr-auto" role="group">
-        <a class="btn btn-danger" href="@delete" data-toggle="modal" data-target="#delete">
+    <div class="btn-group m-1" role="group">
+        <a class="btn btn-danger" href="@delete" data-toggle="modal" data-target="#delete" data-placement="top" title="Delete files">
             <span class="octicon octicon-trashcan"></span>
-            Delete
+            <span class="d-none d-md-inline">Delete</span>
         </a>
     </div>
-    <div class="btn-group" role="group">
-        <a class="btn btn-warning" href="./">
+    <div class="btn-group m-1 ml-auto" role="group">
+        <a class="btn btn-warning" href="./" data-placement="top" title="Refresh list">
             <span class="octicon octicon-sync"></span>
-            Refresh
+            <span class="d-none d-lg-inline">Refresh</span>
         </a>
     </div>
 </nav>
