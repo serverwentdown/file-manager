@@ -26,6 +26,8 @@ A basic node.js file manager.
   
 ## Screenshots
 
+These screenshots are not up-to-date. 
+
 ![](https://ambrose.makerforce.io/file-manager/login1.png)
 
 ![](https://ambrose.makerforce.io/file-manager/upl2.png)
@@ -37,6 +39,12 @@ A basic node.js file manager.
 ![](https://ambrose.makerforce.io/file-manager/dl1.png)
 
 ## Usage
+
+```zsh
+docker run --rm -it -v $PWD:/data -p 8080:8080 registry.labs.0x.no/file-manager
+```
+
+OR
 
 ```zsh
 git clone https://github.com/ambrosechua/file-manager.git ~/path/to/file-manager

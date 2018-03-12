@@ -20,6 +20,8 @@ const fs = require("fs");
 const path = require("path");
 
 const filesize = require("filesize");
+const octicons = require("octicons");
+const handlebars = require("handlebars");
 
 let app = express();
 let http = app.listen(process.env.PORT || 8080);
@@ -30,6 +32,12 @@ app.engine("handlebars", hbs({
     layoutsDir: path.join(__dirname, "views", "layouts"),
     defaultLayout: "main",
     helpers: {
+        octicon: (i, options) => {
+            if (!octicons[i]) {
+                return new handlebars.SafeString(octicons.question.toSVG());
+            }
+            return new handlebars.SafeString(octicons[i].toSVG());
+        },
         eachpath: (path, options) => {
             if (typeof path != "string") {
                 return "";
@@ -46,7 +54,7 @@ app.engine("handlebars", hbs({
                 });
             });
             return out;
-        }
+        },
     }
 }));
 app.set("view engine", "handlebars");
