@@ -17,6 +17,7 @@ const notp = require("notp");
 const base32 = require("thirty-two");
 
 const fs = require("fs");
+const rimraf = require("rimraf");
 const path = require("path");
 
 const filesize = require("filesize");
@@ -311,7 +312,9 @@ app.post("/*@delete", (req, res) => {
             return new Promise((resolve, reject) => {
                 let op = null;
                 if (f.isdirectory) {
-                    op = fs.rmdir;
+                    op = (dir, cb) => rimraf(dir, {
+						glob: false
+					}, cb);
                 }
                 else if (f.isfile) {
                     op = fs.unlink;
@@ -329,7 +332,7 @@ app.post("/*@delete", (req, res) => {
         Promise.all(promises).then(() => {
             req.flash("success", "Files deleted. ");    
             res.redirect("back");
-        }).catch((err) => { // TODO: recursive rmdir https://github.com/isaacs/rimraf
+        }).catch((err) => {
             req.flash("error", "Unable to delete some files: " + err);    
             res.redirect("back");
         });
