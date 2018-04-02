@@ -17,3 +17,5 @@ pipeline:
   slack:
     image: plugins/slack
     secrets: [ slack_webhook ]
+    when:
+      status: [ failure, success ]
