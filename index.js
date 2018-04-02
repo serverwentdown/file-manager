@@ -398,7 +398,7 @@ app.get("/*@download", (req, res) => {
 const shellable = process.env.SHELL != "false" && process.env.SHELL;
 const cmdable = process.env.CMD != "false" && process.env.CMD;
 if (shellable || cmdable) {
-	const shellArgs = process.env.SHELL.split(" ");
+    const shellArgs = process.env.SHELL.split(" ");
     const exec = process.env.SHELL == "login" ? "/usr/bin/env" : shellArgs[0];
     const args = process.env.SHELL == "login" ? ["login"] : shellArgs.slice(1);
 
