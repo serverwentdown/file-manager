@@ -540,7 +540,9 @@ app.get("/*", (req, res) => {
         });
     }
     else if (res.stats.isFile()) {
-        res.download(relative(res.filename));
+        res.sendFile(relative(res.filename), {
+			dotfiles: "allow"
+		});
     }
 });
 
