@@ -1,0 +1,17 @@
+pipeline:
+  docker:
+    image: plugins/docker
+    registry: registry.makerforce.io
+    secrets: [ docker_username, docker_password ]
+    repo: registry.makerforce.io/ambrose/file-manager
+    dockerfile: Dockerfile
+    tags:
+      - latest
+  docker-env:
+    image: plugins/docker
+    registry: registry.makerforce.io
+    secrets: [ docker_username, docker_password ]
+    repo: registry.makerforce.io/ambrose/file-manager
+    dockerfile: Dockerfile.env
+    tags:
+      - env
