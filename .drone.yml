@@ -1,17 +1,34 @@
-pipeline:
-  docker:
-    image: plugins/docker
+kind: pipeline
+name: default
+
+steps:
+- name: docker
+  image: plugins/docker
+  settings:
     registry: registry.makerforce.io
-    secrets: [ docker_username, docker_password ]
     repo: registry.makerforce.io/ambrose/file-manager
-    dockerfile: Dockerfile
     tags:
-      - latest
-  docker-env:
-    image: plugins/docker
+    - latest
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+- name: docker-env
+  image: plugins/docker
+  settings:
     registry: registry.makerforce.io
-    secrets: [ docker_username, docker_password ]
     repo: registry.makerforce.io/ambrose/file-manager
     dockerfile: Dockerfile.env
     tags:
-      - env
+    - env
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+- name: slack
+  image: plugins/slack
+  settings:
+    webhook:
+      from_secret: slack_webhook
+  when:
+    status: [ failure, success ]
