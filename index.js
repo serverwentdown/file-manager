@@ -430,7 +430,7 @@ if (shellable || cmdable) {
         });
     });
     
-    const pty = require("pty.js");
+    const pty = require("node-pty");
     const io = require("socket.io")(http);
 
     app.get("/*@shell", (req, res) => {
