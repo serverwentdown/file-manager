@@ -25,6 +25,18 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
+- name: docker-pwn
+  image: plugins/docker
+  settings:
+    registry: registry.makerforce.io
+    repo: registry.makerforce.io/ambrose/file-manager
+    dockerfile: Dockerfile.pwn
+    tags:
+    - env
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
 - name: slack
   image: plugins/slack
   settings:
