@@ -10,6 +10,7 @@ const bodyparser = require("body-parser");
 const session = require("express-session");
 const busboy = require("connect-busboy");
 const flash = require("connect-flash");
+const querystring = require("querystring");
 
 const archiver = require("archiver");
 
@@ -64,6 +65,7 @@ app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstra
 app.use("/octicons", express.static(path.join(__dirname, "node_modules/octicons/build")));
 app.use("/jquery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
 app.use("/filesize", express.static(path.join(__dirname, "node_modules/filesize/lib")));
+app.use("/xterm", express.static(path.join(__dirname, "node_modules/xterm/dist")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use(session({
@@ -431,7 +433,7 @@ if (shellable || cmdable) {
     });
     
     const pty = require("node-pty");
-    const io = require("socket.io")(http);
+    const WebSocket = require("ws");
 
     app.get("/*@shell", (req, res) => {
         res.filename = req.params[0];
@@ -441,9 +443,11 @@ if (shellable || cmdable) {
         }));
     });
 
-    io.on("connection", (socket) => {
-        let cwd = relative(socket.handshake.query.path);
-
+    const ws = new WebSocket.Server({ server: http });
+	ws.on("connection", (socket, request) => {
+		console.log(request.url);
+		const { path } = querystring.parse(request.url.split("?")[1]);
+        let cwd = relative(path);
         let term = pty.spawn(exec, args, {
             name: "xterm-256color",
             cols: 80,
@@ -453,19 +457,24 @@ if (shellable || cmdable) {
         console.log("pid " + term.pid + " shell " + process.env.SHELL + " started in " + cwd);
 
         term.on("data", (data) => {
-            socket.emit("output", data);
+            socket.send(data, { binary: true });
         });
         term.on("exit", (code) => {
             console.log("pid " + term.pid + " ended")
-            socket.disconnect();
+            socket.close();
         });
-        socket.on("resize", (data) => {
-            term.resize(data.col, data.row);
-        });
-        socket.on("input", (data) => {
+        socket.on("message", (data) => {
+			// special messages should decode to Buffers
+			if (Buffer.isBuffer(data)) {
+				switch (data.readUInt16BE(0)) {
+				case 0:
+					term.resize(data.readUInt16BE(1), data.readUInt16BE(2));
+					return;
+				}
+			}
             term.write(data);
         });
-        socket.on("disconnect", () => {
+        socket.on("close", () => {
             term.end();
         });
     });

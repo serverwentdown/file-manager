@@ -1,12 +1,12 @@
 {{> navbar}}
 
-<div style="padding-top: 56px; padding-bottom: 56px;">
-<main id="shell" data-path="/{{path}}"></main>
+<div style="padding-top: 56px; padding-bottom: 56px; height: 100vh">
+    <main id="shell" style="height: 100%; background: #000" data-path="/{{path}}"></main>
 </div>
 
 <nav class="navbar navbar-light bg-light fixed-bottom p-1 px-2">
     <div class="btn-group m-1" role="group">
-        <a class="btn btn-danger" href="/{{path}}" class="shell-close" data-placement="top" title="Close and return to folder">
+        <a class="btn btn-danger" href="/{{path}}" id="shell-close" data-placement="top" title="Close and return to folder">
             {{octicon "chevron-left"}}
             <span class="d-none d-sm-inline">Close shell</span>
         </a>

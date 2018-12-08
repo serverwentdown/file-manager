@@ -21,6 +21,8 @@
     "octicons": "^6.0.1",
     "rimraf": "^2.6.2",
     "socket.io": "^2.0.4",
-    "thirty-two": "^1.0.2"
+    "thirty-two": "^1.0.2",
+    "ws": "^6.1.2",
+    "xterm": "^3.8.0"
   }
 }
