@@ -32,7 +32,7 @@ steps:
     repo: registry.makerforce.io/ambrose/file-manager
     dockerfile: Dockerfile.pwn
     tags:
-    - env
+    - pwn
     username:
       from_secret: docker_username
     password:
