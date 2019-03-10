@@ -19,9 +19,9 @@
                 <input type="checkbox" class="custom-control-input multi-select" data-select="{{name}}" data-select-size="{{size}}" id="check{{@index}}">
                 <label class="custom-control-label d-flex align-items-start justify-content-between" for="check{{@index}}">
                     {{#if isdirectory}}
-                        <a href="{{name}}/" class="name">{{name}}/</a>
+                        <a href="./{{name}}/" class="name">{{name}}/</a>
                     {{else}}
-                        <a href="{{name}}" class="name mr-auto">{{name}}</a>
+                        <a href="./{{name}}" class="name mr-auto">{{name}}</a>
                         <span class="badge badge-pill badge-secondary">{{size}}</span>
                     {{/if}}
                 </label>
