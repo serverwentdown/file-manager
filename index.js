@@ -518,7 +518,7 @@ app.get("/*", (req, res) => {
                             size: filesize(stats.size)
                         });
                     });
-                });
+                }).catch((ex) => console.error(ex));
             });
 
             Promise.all(promises).then((files) => {
