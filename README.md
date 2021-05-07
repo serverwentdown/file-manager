@@ -23,10 +23,10 @@ A basic node.js file manager.
   - [x] Download archive
   - [ ] Change permissions
 - [x] Remote commands
-  
+
 ## Screenshots
 
-These screenshots are not up-to-date. 
+These screenshots are not up-to-date.
 
 ![](https://ambrose.makerforce.io/file-manager/login1.png)
 
@@ -41,22 +41,22 @@ These screenshots are not up-to-date.
 ## Usage
 
 ```zsh
-docker run --rm -it -v $PWD:/data -p 8080:8080 registry.labs.0x.no/file-manager
+docker run --rm -it -v $PWD:/data -p 8080:8080 serverwentdown/file-manager
 ```
 
 OR
 
 ```zsh
-git clone https://github.com/ambrosechua/file-manager.git ~/path/to/file-manager
+git clone https://github.com/serverwentdown/file-manager.git ~/path/to/file-manager
 node ~/path/to/file-manager/index.js
 # or
-npm i -g https://github.com/ambrosechua/file-manager.git
+npm i -g https://github.com/serverwentdown/file-manager.git
 file-manager
 ```
 
 ## Options
 
-Options are currently only suppliable via ENV variables. 
+The following environmental variables can be used to configure `file-manager`.
 
 ### SHELL=
 
@@ -64,7 +64,7 @@ Enable the shell feature, which allows users to start a login shell (when set to
 
 ### CMD=
 
-Enable running single commands in the default shell, usually `/bin/sh`. Be careful when enabling this feature as anyone with access to this portal can execute any command on your machine.
+Set to something other than "false" to enable running single commands in the default shell, usually `/bin/sh`. Be careful when enabling this feature as anyone with access to this portal can execute any command on your machine.
 
 ### PORT=
 
@@ -72,8 +72,4 @@ Listen on $PORT. Default: 8080
 
 ### KEY=
 
-Setting this variable enables authentication using 
-TOTP (RFC6238). $KEY is a base32 encoded shared 
-secret. This key is only a weak means of protection 
-as it is succeptable to brute-force. You can generate 
-one from [here](http://www.xanxys.net/totp/) or manually. 
+Setting this variable enables authentication using TOTP (RFC6238). $KEY is a base32 encoded shared secret. This key is only a weak means of protection as it is succeptable to brute-force. You can generate one from [here](http://www.xanxys.net/totp/) or manually.
