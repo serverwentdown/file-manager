@@ -27,9 +27,9 @@ let setSelected = (files) => {
 	const hasDirectory = files.reduce((a, f) => a || f.type == "directory", false);
 	const totalSize = files.map(f => f.size).reduce((a, b) => a + b);
 	if (hasDirectory) {
-		$(".multi-files-total").text("Unknown");
+		$(".multi-files-total").val("");
 	} else {
-		$(".multi-files-total").text(filesize(totalSize));
+		$(".multi-files-total").val(filesize(totalSize));
 	}
 };
 

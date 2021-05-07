@@ -3,7 +3,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header bg-light">
-					<h5 class="modal-title">Download file archive?</h5>
+					<h5 class="modal-title">Download file archive</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
@@ -11,7 +11,10 @@
 					<ul class="list-group multi-files">
 						
 					</ul>
-					<p class="mt-3 mb-0">Total size: <span class="multi-files-total">Unknown</span></p>
+					<div class="mt-3">
+						<label class="form-label" for="upload-file-size">Total size</label>
+						<input class="form-control multi-files-total" type="text" disabled placeholder="Unknown" />
+					</div>
 					<input type="hidden" name="files" value="" class="multi-files-value" />
 				</div>
 				<div class="modal-footer bg-light">

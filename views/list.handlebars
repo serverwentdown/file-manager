@@ -1,41 +1,48 @@
 {{> navbar path=path}}
 
 <div style="padding-top: 56px; padding-bottom: 56px;">
-<main class="container my-4">
-	{{#each errors as |error|}}
-		<div class="alert alert-danger" role="alert">
-			{{error}}
+	<main class="container my-4">
+		<div class="row justify-content-center">
+			<div class="col col-lg-10 col-xl-8 col-xxl-8">
+				{{#each errors as |error|}}
+					<div class="alert alert-danger" role="alert">
+						{{error}}
+					</div>
+				{{/each}}
+				{{#each successes as |success|}}
+					<div class="alert alert-success" role="alert">
+						{{success}}
+					</div>
+				{{/each}}
+				<ul class="list-group">
+				{{#each files}}
+					<li class="list-group-item">
+						<label for="check{{@index}}" class="stretched-invisible-label">
+							<div class="form-check">
+								<input type="checkbox" class="form-check-input multi-select" data-select="{{name}}" data-select-size="{{size}}" data-select-type="{{#if isdirectory}}directory{{else}}file{{/if}}" id="check{{@index}}">
+								<span class="form-check-label d-flex align-items-start justify-content-between">
+									{{#if isdirectory}}
+										<a href="./{{name}}/" class="name">{{name}}/</a>
+									{{else}}
+										<a href="./{{name}}" class="name">{{name}}</a>
+										<span class="badge rounded-pill bg-secondary badge-alignment">{{filesize size}}</span>
+									{{/if}}
+								</span>
+								{{#if isimage}}
+								<img src="./{{name}}" class="mt-2" style="max-height: 6em; max-width: 100%;">
+								{{/if}}
+							</div>
+						</label>
+					</li>
+				{{else}}
+					<li class="list-group-item">
+						No files
+					</li>
+				{{/each}}
+				</ul>
+			</div>
 		</div>
-	{{/each}}
-	{{#each successes as |success|}}
-		<div class="alert alert-success" role="alert">
-			{{success}}
-		</div>
-	{{/each}}
-	<ul class="list-group">
-	{{#each files}}
-		<li class="list-group-item">
-			<label for="check{{@index}}" class="stretched-invisible-label">
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input multi-select" data-select="{{name}}" data-select-size="{{size}}" data-select-type="{{#if isdirectory}}directory{{else}}file{{/if}}" id="check{{@index}}">
-					<span class="form-check-label d-flex align-items-start justify-content-between">
-						{{#if isdirectory}}
-							<a href="./{{name}}/" class="name">{{name}}/</a>
-						{{else}}
-							<a href="./{{name}}" class="name">{{name}}</a>
-							<span class="badge rounded-pill bg-secondary badge-alignment">{{filesize size}}</span>
-						{{/if}}
-					</span>
-				</div>
-			</label>
-		</li>
-	{{else}}
-		<li class="list-group-item">
-			No files
-		</li>
-	{{/each}}
-	</ul>
-</main>
+	</main>
 </div>
 
 {{> toolbar shellable=shellable cmdable=cmdable}}

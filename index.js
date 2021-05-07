@@ -490,6 +490,16 @@ if (shellable || cmdable) {
     });
 }
 
+const EXT_IMAGES = [".jpg", ".jpeg", ".png", ".webp", ".svg", ".gif", ".tiff"];
+function isimage(f) {
+	for (const ext of EXT_IMAGES) {
+		if (f.endsWith(ext)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 app.get("/*", (req, res) => {
     if (res.stats.error) {
         res.render("list", flashify(req, {
@@ -525,6 +535,7 @@ app.get("/*", (req, res) => {
                         resolve({
                             name: f,
                             isdirectory: stats.isDirectory(),
+							isimage: isimage(f),
                             size: stats.size
                         });
                     });
