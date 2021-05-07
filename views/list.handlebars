@@ -24,8 +24,12 @@
 									{{#if isdirectory}}
 										<a href="./{{name}}/" class="name">{{name}}/</a>
 									{{else}}
+									{{#if error}}
+										<a href="./{{name}}/" class="name" title="{{error}}">{{name}}/</a>
+									{{else}}
 										<a href="./{{name}}" class="name">{{name}}</a>
 										<span class="badge rounded-pill bg-secondary badge-alignment">{{filesize size}}</span>
+									{{/if}}
 									{{/if}}
 								</span>
 								{{#if issmallimage}}

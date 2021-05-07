@@ -13,4 +13,6 @@ RUN cd /usr/local/share/file-manager \
 VOLUME /data
 WORKDIR /data
 
+ENV NODE_ENV=production
+
 CMD ["node", "/usr/local/share/file-manager/index.js"]
