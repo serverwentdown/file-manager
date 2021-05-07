@@ -1,44 +1,52 @@
-<nav class="navbar navbar-light bg-light fixed-bottom p-1 px-2">
-    <div class="btn-group m-1" role="group">
-        <a class="btn btn-primary" href="@upload" data-toggle="modal" data-target="#upload" data-placement="top" title="Upload">
-            {{octicon "cloud-upload"}}
-            <span class="d-none d-sm-inline">Upload</span>
-        </a>
-        <a class="btn btn-secondary" href="@mkdir" data-toggle="modal" data-target="#mkdir" data-placement="top" title="New folder">
-            {{octicon "file-directory"}}
-            <span class="d-none d-md-inline">New folder</span>
-        </a>
-    </div>
-    <div class="btn-group m-1" role="group">
-        {{#if cmdable}}
-        <a class="btn btn-info" href="@cmd" data-toggle="modal" data-target="#cmd" data-placement="top" title="Run command">
-            {{octicon "terminal"}}
-            <span class="d-none d-lg-inline">Run command</span>
-        </a>
-        {{/if}}
-        {{#if shellable}}
-        <a class="btn btn-warning" href="@shell" data-placement="top" title="Open shell">
-            {{octicon "terminal"}}
-            <span class="d-none d-md-inline">Open shell</span>
-        </a>
-        {{/if}}
-    </div>
-    <div class="btn-group m-1" role="group">
-        <a class="btn btn-success" href="@download" data-toggle="modal" data-target="#download" data-placement="top" title="Download files as zip">
-            {{octicon "file-zip"}}
-            <span class="d-none d-md-inline">Download</span>
-        </a>
-    </div>
-    <div class="btn-group m-1" role="group">
-        <a class="btn btn-danger" href="@delete" data-toggle="modal" data-target="#delete" data-placement="top" title="Delete files">
-            {{octicon "trashcan"}}
-            <span class="d-none d-md-inline">Delete</span>
-        </a>
-    </div>
-    <div class="btn-group m-1 ml-auto" role="group">
-        <a class="btn btn-warning" href="./" data-placement="top" title="Refresh list">
-            {{octicon "sync"}}
-            <span class="d-none d-lg-inline">Refresh</span>
-        </a>
-    </div>
+<nav class="navbar navbar-light bg-light fixed-bottom">
+	<div class="container-fluid px-2">
+		<div class="d-flex">
+			<div class="btn-group me-1" role="group">
+				<a class="btn btn-primary" href="@upload" data-bs-toggle="modal" data-bs-target="#upload" data-placement="top" title="Upload">
+					{{octicon "cloud-upload"}}
+					<span class="d-none d-sm-inline">Upload</span>
+				</a>
+				<a class="btn btn-secondary" href="@mkdir" data-bs-toggle="modal" data-bs-target="#mkdir" data-placement="top" title="New folder">
+					{{octicon "file-directory"}}
+					<span class="d-none d-md-inline">New folder</span>
+				</a>
+			</div>
+			{{#either cmdable shellable}}
+			<div class="btn-group me-1" role="group">
+				{{#if cmdable}}
+				<a class="btn btn-info" href="@cmd" data-bs-toggle="modal" data-bs-target="#cmd" data-placement="top" title="Run command">
+					{{octicon "terminal"}}
+					<span class="d-none d-lg-inline">Run command</span>
+				</a>
+				{{/if}}
+				{{#if shellable}}
+				<a class="btn btn-warning" href="@shell" data-placement="top" title="Open shell">
+					{{octicon "terminal"}}
+					<span class="d-none d-md-inline">Open shell</span>
+				</a>
+				{{/if}}
+			</div>
+			{{/either}}
+			<div class="btn-group me-1" role="group">
+				<a class="btn btn-success" href="@download" data-bs-toggle="modal" data-bs-target="#download" data-placement="top" title="Download files as zip">
+					{{octicon "file-zip"}}
+					<span class="d-none d-md-inline">Download</span>
+				</a>
+			</div>
+			<div class="btn-group me-1" role="group">
+				<a class="btn btn-danger" href="@delete" data-bs-toggle="modal" data-bs-target="#delete" data-placement="top" title="Delete files">
+					{{octicon "trashcan"}}
+					<span class="d-none d-md-inline">Delete</span>
+				</a>
+			</div>
+		</div>
+		<div class="d-flex">
+			<div class="btn-group ml-1" role="group">
+				<a class="btn btn-warning" href="./" data-placement="top" title="Refresh list">
+					{{octicon "sync"}}
+					<span class="d-none d-lg-inline">Refresh</span>
+				</a>
+			</div>
+		</div>
+	</div>
 </nav>

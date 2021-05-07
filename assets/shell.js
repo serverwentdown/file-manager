@@ -1,11 +1,9 @@
 /* jshint esversion: 6 */
 
-$(document).ready(() => {
-	let $shell = $("#shell");
-	if ($shell.length < 1) {
-		return;
-	}
-	let $close = $("#shell-close");
+const $shell = $("#shell");
+const $close = $("#shell-close");
+
+if ($shell.length > 0) {
 
 	const ws = new WebSocket("ws" + (window.location.protocol === "https:" ? "s" : "") + "://" + window.location.host + "/websocket?path=" + encodeURIComponent($shell.data("path")));
 
@@ -54,4 +52,5 @@ $(document).ready(() => {
 		});
 
 	});
-});
+
+}

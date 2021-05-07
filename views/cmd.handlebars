@@ -2,36 +2,36 @@
 
 <div style="padding-top: 56px; padding-bottom: 56px;">
 <main class="container my-4">
-    {{#each errors as |error|}}
-        <div class="alert alert-danger" role="alert">
-            {{error}}
-        </div>
-    {{/each}}
-    {{#each successes as |success|}}
-        <div class="alert alert-success" role="alert">
-            {{success}}
-        </div>
-    {{/each}}
-    <h4>command</h4>
-    <h4 class="cmd"><code>{{cmd}}</code></h4>
-    <h4>stdout</h4>
-    <pre><code>{{stdout}}</code></pre>
-    <h4>stderr</h4>
-    <pre><code>{{stderr}}</code></pre>
+	{{#each errors as |error|}}
+		<div class="alert alert-danger" role="alert">
+			{{error}}
+		</div>
+	{{/each}}
+	{{#each successes as |success|}}
+		<div class="alert alert-success" role="alert">
+			{{success}}
+		</div>
+	{{/each}}
+	<h4>command</h4>
+	<h4 class="cmd"><code>{{cmd}}</code></h4>
+	<h4>stdout</h4>
+	<pre><code>{{stdout}}</code></pre>
+	<h4>stderr</h4>
+	<pre><code>{{stderr}}</code></pre>
 </main>
 </div>
 
 <nav class="navbar navbar-light bg-light fixed-bottom p-1 px-2">
-    <div class="btn-group m-1" role="group">
-        <a class="btn btn-primary" href="/{{path}}" data-placement="top" title="Return to folder">
-            {{octicon "chevron-left"}}
-            <span class="d-none d-sm-inline">Back</span>
-        </a>
-        <a class="btn btn-warning" href="@cmd" data-toggle="modal" data-target="#cmd" data-placement="top" title="Run another command">
-            {{octicon "terminal"}}
-            <span class="d-none d-sm-inline">Run command</span>
-        </a>
-    </div>
+	<div class="btn-group m-1" role="group">
+		<a class="btn btn-primary" href="/{{path}}" data-placement="top" title="Return to folder">
+			{{octicon "chevron-left"}}
+			<span class="d-none d-sm-inline">Back</span>
+		</a>
+		<a class="btn btn-warning" href="@cmd" data-toggle="modal" data-target="#cmd" data-placement="top" title="Run another command">
+			{{octicon "terminal"}}
+			<span class="d-none d-sm-inline">Run command</span>
+		</a>
+	</div>
 </nav>
 
 {{> dialogue-cmd}}

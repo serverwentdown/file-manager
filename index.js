@@ -34,6 +34,12 @@ app.engine("handlebars", hbs({
     layoutsDir: path.join(__dirname, "views", "layouts"),
     defaultLayout: "main",
     helpers: {
+		either: (a, b, options) => {
+			if (a || b) {
+				return options.fn();
+			}
+		},
+		filesize: filesize,
         octicon: (i, options) => {
             if (!octicons[i]) {
                 return new handlebars.SafeString(octicons.question.toSVG());
@@ -174,7 +180,7 @@ app.put("/*", (req, res) => {
                     res.redirect("back");
                 });
                 save.on("error", (err) => {
-                    res.flash("error", err);
+                    res.flash("error", err.toString());
                     res.redirect("back");
                 });
             }
@@ -230,9 +236,13 @@ app.post("/*@upload", (req, res) => {
             req.flash("error", "File exists, cannot overwrite. ");
             res.redirect("back");
         }).catch((err) => {
-            console.log("saving");
-            let save = fs.createWriteStream(relative(res.filename, saveas));
+			const saveName = relative(res.filename, saveas);
+            console.log("saving file to " + saveName);
+            let save = fs.createWriteStream(saveName);
             save.on("close", () => {
+				if (res.headersSent) {
+					return;
+				}
                 if (buff.length === 0) {
                     req.flash("success", "File saved. Warning: empty file.");
                 }
@@ -243,7 +253,7 @@ app.post("/*@upload", (req, res) => {
                 res.redirect("back");
             });
             save.on("error", (err) => {
-                req.flash("error", err);
+                req.flash("error", err.toString());
                 res.redirect("back");
             });
             save.write(buff);
@@ -277,7 +287,7 @@ app.post("/*@mkdir", (req, res) => {
     }).catch((err) => {
         fs.mkdir(relative(res.filename, folder), (err) => {
             if (err) {
-                req.flash("error", err);
+                req.flash("error", err.toString());
                 res.redirect("back");
                 return;
             }
@@ -341,7 +351,7 @@ app.post("/*@delete", (req, res) => {
             res.redirect("back");
         });
     }).catch((err) => {
-        req.flash("error", err);
+        req.flash("error", err.toString());
         res.redirect("back");
     });
 });
@@ -394,7 +404,7 @@ app.get("/*@download", (req, res) => {
         zip.finalize();
     }).catch((err) => {
         console.log(err);
-        req.flash("error", err);
+        req.flash("error", err.toString());
         res.redirect("back");
     });
 });
@@ -515,7 +525,7 @@ app.get("/*", (req, res) => {
                         resolve({
                             name: f,
                             isdirectory: stats.isDirectory(),
-                            size: filesize(stats.size)
+                            size: stats.size
                         });
                     });
                 });
@@ -551,6 +561,9 @@ app.get("/*", (req, res) => {
     }
     else if (res.stats.isFile()) {
         res.sendFile(relative(res.filename), {
+			headers: {
+				"Content-Security-Policy": "default-src 'self'; script-src 'none'; sandbox"
+			},
 			dotfiles: "allow"
 		});
     }
