@@ -535,7 +535,7 @@ app.get("/*", (req, res) => {
                         resolve({
                             name: f,
                             isdirectory: stats.isDirectory(),
-							isimage: isimage(f),
+							issmallimage: isimage(f) && stats.size < 1024 * 10,
                             size: stats.size
                         });
                     });
