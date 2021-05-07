@@ -34,19 +34,19 @@ app.engine("handlebars", hbs({
 	layoutsDir: path.join(__dirname, "views", "layouts"),
 	defaultLayout: "main",
 	helpers: {
-		either: (a, b, options) => {
+		either: function(a, b, options) {
 			if (a || b) {
 				return options.fn(this);
 			}
 		},
 		filesize: filesize,
-		octicon: (i, options) => {
+		octicon: function(i, options) {
 			if (!octicons[i]) {
 				return new handlebars.SafeString(octicons.question.toSVG());
 			}
 			return new handlebars.SafeString(octicons[i].toSVG());
 		},
-		eachpath: (path, options) => {
+		eachpath: function (path, options) {
 			if (typeof path != "string") {
 				return "";
 			}
