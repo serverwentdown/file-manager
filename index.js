@@ -77,7 +77,7 @@ app.use("/@assets/xterm-addon-attach", express.static(path.join(__dirname, "node
 app.use("/@assets/xterm-addon-fit", express.static(path.join(__dirname, "node_modules/xterm-addon-fit")));
 
 app.use(session({
-	secret: "meowmeow"
+	secret: process.env.SESSION_KEY || "meowmeow"
 }));
 app.use(flash());
 app.use(busboy());
@@ -103,7 +103,6 @@ app.get("/@login", (req, res) => {
 });
 app.post("/@login", (req, res) => {
 	let pass = notp.totp.verify(req.body.token.replace(" ", ""), KEY);
-	console.log(pass, req.body.token.replace(" ", ""));
 	if (pass) {
 		req.session.login = true;
 		res.redirect("/");
@@ -168,34 +167,6 @@ app.all("/*", (req, res, next) => {
 	});
 });
 
-// currently unused
-app.put("/*", (req, res) => {
-	if (res.stats.error) {
-		req.busboy.on("file", (key, file, filename) => {
-			if (key == "file") {
-				let save = fs.createWriteStream(relative(res.filename));
-				file.pipe(save);
-				save.on("close", () => {
-					res.flash("success", "File saved. ");
-					res.redirect("back");
-				});
-				save.on("error", (err) => {
-					res.flash("error", err.toString());
-					res.redirect("back");
-				});
-			}
-		});
-		req.busboy.on("field", (key, value) => {
-
-		});
-		req.pipe(req.busboy);
-	}
-	else {
-		req.flash("error", "File exists, cannot overwrite. ");
-		res.redirect("back");
-	}
-});
-
 app.post("/*@upload", (req, res) => {
 	res.filename = req.params[0];
 
@@ -233,6 +204,7 @@ app.post("/*@upload", (req, res) => {
 		});
 
 		fileExists.then((stats) => {
+			console.warn("file exists, cannot overwrite");
 			req.flash("error", "File exists, cannot overwrite. ");
 			res.redirect("back");
 		}).catch((err) => {
@@ -253,6 +225,7 @@ app.post("/*@upload", (req, res) => {
 				res.redirect("back");
 			});
 			save.on("error", (err) => {
+				console.warn(err);
 				req.flash("error", err.toString());
 				res.redirect("back");
 			});
@@ -287,6 +260,7 @@ app.post("/*@mkdir", (req, res) => {
 	}).catch((err) => {
 		fs.mkdir(relative(res.filename, folder), (err) => {
 			if (err) {
+				console.warn(err);
 				req.flash("error", err.toString());
 				res.redirect("back");
 				return;
@@ -347,10 +321,12 @@ app.post("/*@delete", (req, res) => {
 			req.flash("success", "Files deleted. ");
 			res.redirect("back");
 		}).catch((err) => {
+			console.warn(err);
 			req.flash("error", "Unable to delete some files: " + err);
 			res.redirect("back");
 		});
 	}).catch((err) => {
+		console.warn(err);
 		req.flash("error", err.toString());
 		res.redirect("back");
 	});
@@ -386,6 +362,7 @@ app.get("/*@download", (req, res) => {
 	Promise.all(promises).then((files) => {
 		let zip = archiver("zip", {});
 		zip.on("error", function(err) {
+			console.warn(err);
 			res.status(500).send({
 				error: err.message
 			});
@@ -403,7 +380,7 @@ app.get("/*@download", (req, res) => {
 
 		zip.finalize();
 	}).catch((err) => {
-		console.log(err);
+		console.warn(err);
 		req.flash("error", err.toString());
 		res.redirect("back");
 	});
@@ -425,12 +402,14 @@ if (shellable || cmdable) {
 		if (!cmd || cmd.length < 1) {
 			return res.status(400).end();
 		}
+		console.log("running command " + cmd);
 
 		child_process.exec(cmd, {
 			cwd: relative(res.filename),
 			timeout: 60 * 1000,
 		}, (err, stdout, stderr) => {
 			if (err) {
+				console.log("command run failed: " + JSON.stringify(err));
 				req.flash("error", "Command failed due to non-zero exit code");
 			}
 			res.render("cmd", flashify(req, {
@@ -455,7 +434,6 @@ if (shellable || cmdable) {
 
 	const ws = new WebSocket.Server({ server: http });
 	ws.on("connection", (socket, request) => {
-		console.log(request.url);
 		const { path } = querystring.parse(request.url.split("?")[1]);
 		let cwd = relative(path);
 		let term = pty.spawn(exec, args, {
@@ -529,6 +507,7 @@ app.get("/*", (req, res) => {
 			const promises = filenames.map(f => new Promise((resolve, reject) => {
 				fs.stat(relative(res.filename, f), (err, stats) => {
 					if (err) {
+						console.warn(err);
 						return resolve({
 							name: f,
 							error: err
@@ -551,6 +530,7 @@ app.get("/*", (req, res) => {
 					files: files,
 				}));
 			}).catch((err) => {
+				console.error(err);
 				res.render("list", flashify(req, {
 					shellable: shellable,
 					cmdable: cmdable,
@@ -561,6 +541,7 @@ app.get("/*", (req, res) => {
 				}));
 			});
 		}).catch((err) => {
+			console.warn(err);
 			res.render("list", flashify(req, {
 				shellable: shellable,
 				cmdable: cmdable,

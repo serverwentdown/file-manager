@@ -4,15 +4,19 @@
 	<main id="shell" style="height: 100%; background: #000" data-path="/{{path}}"></main>
 </div>
 
-<nav class="navbar navbar-light bg-light fixed-bottom p-1 px-2">
-	<div class="btn-group m-1" role="group">
-		<a class="btn btn-danger" href="/{{path}}" id="shell-close" data-placement="top" title="Close and return to folder">
-			{{octicon "chevron-left"}}
-			<span class="d-none d-sm-inline">Close shell</span>
-		</a>
-		<a class="btn btn-warning" href="@shell" target="_blank" data-placement="top" title="Open shell in new tab">
-			{{octicon "terminal"}}
-			<span class="d-none d-sm-inline">New shell</span>
-		</a>
+<nav class="navbar navbar-light bg-light fixed-bottom">
+	<div class="container-fluid px-2">
+		<div class="d-flex">
+			<div class="btn-group me-2" role="group">
+				<a class="btn btn-danger" href="/{{path}}" id="shell-close">
+					{{octicon "chevron-left"}}
+					<span class="d-none d-sm-inline">Exit shell</span>
+				</a>
+				<a class="btn btn-warning" href="@shell" target="_blank" title="Open a new shell tab" data-bs-placement="top">
+					{{octicon "terminal"}}
+					<span class="d-none d-sm-inline">New shell</span>
+				</a>
+			</div>
+		</div>
 	</div>
 </nav>

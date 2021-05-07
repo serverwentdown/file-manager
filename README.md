@@ -58,6 +58,10 @@ file-manager
 
 The following environmental variables can be used to configure `file-manager`.
 
+### SESSION_KEY=
+
+Express session key, generate something random.
+
 ### SHELL=
 
 Enable the shell feature, which allows users to start a login shell (when set to `login`) or the binary specified by this option (example: `/bin/bash`). Be careful when enabling this feature as anyone with access to this portal can execute any command on your machine.

@@ -21,16 +21,20 @@
 </main>
 </div>
 
-<nav class="navbar navbar-light bg-light fixed-bottom p-1 px-2">
-	<div class="btn-group m-1" role="group">
-		<a class="btn btn-primary" href="/{{path}}" data-placement="top" title="Return to folder">
-			{{octicon "chevron-left"}}
-			<span class="d-none d-sm-inline">Back</span>
-		</a>
-		<a class="btn btn-warning" href="@cmd" data-toggle="modal" data-target="#cmd" data-placement="top" title="Run another command">
-			{{octicon "terminal"}}
-			<span class="d-none d-sm-inline">Run command</span>
-		</a>
+<nav class="navbar navbar-light bg-light fixed-bottom">
+	<div class="container-fluid px-2">
+		<div class="d-flex">
+			<div class="btn-group me-2" role="group">
+				<a class="btn btn-secondary" href="/{{path}}">
+					{{octicon "chevron-left"}}
+					<span class="d-none d-sm-inline">Back</span>
+				</a>
+				<a class="btn btn-info" href="@cmd" data-bs-toggle="modal" data-bs-target="#cmd" title="Run another command" data-bs-placement="top">
+					{{octicon "terminal"}}
+					<span class="d-none d-sm-inline">Run command</span>
+				</a>
+			</div>
+		</div>
 	</div>
 </nav>
 

@@ -2,11 +2,11 @@
 	<div class="container-fluid px-2">
 		<div class="d-flex">
 			<div class="btn-group me-2" role="group">
-				<a class="btn btn-primary" href="@upload" data-bs-toggle="modal" data-bs-target="#upload" data-placement="top" title="Upload">
+				<a class="btn btn-primary" href="@upload" data-bs-toggle="modal" data-bs-target="#upload" title="Upload a file" data-bs-placement="top">
 					{{octicon "cloud-upload"}}
 					<span class="d-none d-sm-inline">Upload</span>
 				</a>
-				<a class="btn btn-secondary" href="@mkdir" data-bs-toggle="modal" data-bs-target="#mkdir" data-placement="top" title="New folder">
+				<a class="btn btn-secondary" href="@mkdir" data-bs-toggle="modal" data-bs-target="#mkdir" title="Create a new folder" data-bs-placement="top">
 					{{octicon "file-directory"}}
 					<span class="d-none d-md-inline">New folder</span>
 				</a>
@@ -14,13 +14,13 @@
 			{{#either cmdable shellable}}
 			<div class="btn-group me-2" role="group">
 				{{#if cmdable}}
-				<a class="btn btn-info" href="@cmd" data-bs-toggle="modal" data-bs-target="#cmd" data-placement="top" title="Run command">
+				<a class="btn btn-info" href="@cmd" data-bs-toggle="modal" data-bs-target="#cmd" title="Run a command" data-bs-placement="top">
 					{{octicon "terminal"}}
 					<span class="d-none d-lg-inline">Run command</span>
 				</a>
 				{{/if}}
 				{{#if shellable}}
-				<a class="btn btn-warning" href="@shell" data-placement="top" title="Open shell">
+				<a class="btn btn-warning" href="@shell" title="Open a new shell" data-bs-placement="top">
 					{{octicon "terminal"}}
 					<span class="d-none d-md-inline">Open shell</span>
 				</a>
@@ -28,13 +28,13 @@
 			</div>
 			{{/either}}
 			<div class="btn-group me-2" role="group">
-				<a class="btn btn-success" href="@download" data-bs-toggle="modal" data-bs-target="#download" data-placement="top" title="Download file archive">
+				<a class="btn btn-success" href="@download" data-bs-toggle="modal" data-bs-target="#download" title="Download file archive" data-bs-placement="top">
 					{{octicon "file-zip"}}
 					<span class="d-none d-md-inline">Download</span>
 				</a>
 			</div>
 			<div class="btn-group me-2" role="group">
-				<a class="btn btn-danger" href="@delete" data-bs-toggle="modal" data-bs-target="#delete" data-placement="top" title="Delete files">
+				<a class="btn btn-danger" href="@delete" data-bs-toggle="modal" data-bs-target="#delete" title="Delete selected files" data-bs-placement="top">
 					{{octicon "trashcan"}}
 					<span class="d-none d-md-inline">Delete</span>
 				</a>
@@ -42,7 +42,7 @@
 		</div>
 		<div class="d-flex">
 			<div class="btn-group ms-2" role="group">
-				<a class="btn btn-warning" href="./" data-placement="top" title="Refresh list">
+				<a class="btn btn-warning" href="./" title="Refresh list" data-bs-placement="top">
 					{{octicon "sync"}}
 					<span class="d-none d-lg-inline">Refresh</span>
 				</a>

@@ -5,7 +5,7 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbar">
-			<div class="navbar-nav mr-auto">
+			<div class="navbar-nav me-auto">
 				{{#eachpath path}}
 					<a class="nav-item nav-link{{#if current}} active{{/if}}" href="{{path}}">{{name}}</a>
 				{{/eachpath}}
@@ -13,12 +13,12 @@
 			<div class="navbar-nav">
 				{{#if isloginenabled}}
 				{{#if isloggingin}}
-					<a class="nav-item nav-link" href="/@login" title="Sign in">
-						<span class="octicon octicon-sign-in"></span>
+					<a class="nav-item nav-link" href="/@login" title="Sign in" data-bs-placement="left">
+						{{octicon "sign-in"}}
 					</a>
 				{{else}}
-					<a class="nav-item nav-link" href="/@logout" title="Sign out">
-						<span class="octicon octicon-sign-out"></span>
+					<a class="nav-item nav-link" href="/@logout" title="Sign out" data-bs-placement="left">
+						{{octicon "sign-out"}}
 					</a>
 				{{/if}}
 				{{/if}}

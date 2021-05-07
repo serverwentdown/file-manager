@@ -26,6 +26,7 @@
 									{{else}}
 									{{#if error}}
 										<a href="./{{name}}/" class="name" title="{{error}}">{{name}}/</a>
+										<span class="badge rounded-pill bg-danger badge-alignment">err</span>
 									{{else}}
 										<a href="./{{name}}" class="name">{{name}}</a>
 										<span class="badge rounded-pill bg-secondary badge-alignment">{{filesize size}}</span>
