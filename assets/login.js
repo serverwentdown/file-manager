@@ -48,4 +48,5 @@ $inputs.each((i, input) => {
 	$digits = $(input).find("input");
 	$digits.on("keyup", update);
 	$digits.on("change", update);
+	$digits.on("input", update);
 });
