@@ -468,6 +468,7 @@ if (shellable || cmdable) {
 	});
 }
 
+const SMALL_IMAGE_MAX_SIZE = 750 * 1024;  // 750 KB
 const EXT_IMAGES = [".jpg", ".jpeg", ".png", ".webp", ".svg", ".gif", ".tiff"];
 function isimage(f) {
 	for (const ext of EXT_IMAGES) {
@@ -516,7 +517,7 @@ app.get("/*", (req, res) => {
 					resolve({
 						name: f,
 						isdirectory: stats.isDirectory(),
-						issmallimage: isimage(f) && stats.size < 1024 * 10,
+						issmallimage: isimage(f) && stats.size < SMALL_IMAGE_MAX_SIZE,
 						size: stats.size
 					});
 				});
