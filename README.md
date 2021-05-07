@@ -60,11 +60,11 @@ Options are currently only suppliable via ENV variables.
 
 ### SHELL=
 
-Set to `login` to enable accessing a login shell, or your shell binary (example: `bash`). Be careful when enabling this feature. 
+Enable the shell feature, which allows users to start a login shell (when set to `login`) or the binary specified by this option (example: `/bin/bash`). Be careful when enabling this feature as anyone with access to this portal can execute any command on your machine.
 
 ### CMD=
 
-Set to shell binary to enable an alternative command-based execution. Be careful when enabling this feature. 
+Enable running single commands in the default shell, usually `/bin/sh`. Be careful when enabling this feature as anyone with access to this portal can execute any command on your machine.
 
 ### PORT=
 

@@ -61,15 +61,17 @@ app.engine("handlebars", hbs({
 }));
 app.set("view engine", "handlebars");
 
-app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
-app.use("/octicons", express.static(path.join(__dirname, "node_modules/octicons/build")));
-app.use("/jquery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
-app.use("/filesize", express.static(path.join(__dirname, "node_modules/filesize/lib")));
-app.use("/xterm", express.static(path.join(__dirname, "node_modules/xterm/dist")));
-app.use("/assets", express.static(path.join(__dirname, "assets")));
+app.use("/@assets", express.static(path.join(__dirname, "assets")));
+app.use("/@assets/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
+app.use("/@assets/octicons", express.static(path.join(__dirname, "node_modules/octicons/build")));
+app.use("/@assets/jquery", express.static(path.join(__dirname, "node_modules/jquery/dist")));
+app.use("/@assets/filesize", express.static(path.join(__dirname, "node_modules/filesize/lib")));
+app.use("/@assets/xterm", express.static(path.join(__dirname, "node_modules/xterm")));
+app.use("/@assets/xterm-addon-attach", express.static(path.join(__dirname, "node_modules/xterm-addon-attach")));
+app.use("/@assets/xterm-addon-fit", express.static(path.join(__dirname, "node_modules/xterm-addon-fit")));
 
 app.use(session({
-    secret: "meowmeow"    
+    secret: "meowmeow"
 }));
 app.use(flash());
 app.use(busboy());
@@ -173,7 +175,7 @@ app.put("/*", (req, res) => {
                 });
                 save.on("error", (err) => {
                     res.flash("error", err);
-                    res.redirect("back");    
+                    res.redirect("back");
                 });
             }
         });
@@ -332,21 +334,21 @@ app.post("/*@delete", (req, res) => {
             });
         });
         Promise.all(promises).then(() => {
-            req.flash("success", "Files deleted. ");    
+            req.flash("success", "Files deleted. ");
             res.redirect("back");
         }).catch((err) => {
-            req.flash("error", "Unable to delete some files: " + err);    
+            req.flash("error", "Unable to delete some files: " + err);
             res.redirect("back");
         });
     }).catch((err) => {
-        req.flash("error", err);    
+        req.flash("error", err);
         res.redirect("back");
     });
 });
 
 app.get("/*@download", (req, res) => {
     res.filename = req.params[0];
-    
+
     let files = null;
     try {
         files = JSON.parse(req.query.files);
@@ -356,7 +358,7 @@ app.get("/*@download", (req, res) => {
         res.redirect("back");
         return; // res.status(400).end();
     }
-    
+
     let promises = files.map(f => {
         return new Promise((resolve, reject) => {
             fs.stat(relative(res.filename, f), (err, stats) => {
@@ -372,7 +374,7 @@ app.get("/*@download", (req, res) => {
         });
     });
     Promise.all(promises).then((files) => {
-        let zip = archiver.create("zip", {});
+        let zip = archiver("zip", {});
         zip.on("error", function(err) {
             res.status(500).send({
                 error: err.message
@@ -392,7 +394,7 @@ app.get("/*@download", (req, res) => {
         zip.finalize();
     }).catch((err) => {
         console.log(err);
-        req.flash("error", err);    
+        req.flash("error", err);
         res.redirect("back");
     });
 });
@@ -406,7 +408,6 @@ if (shellable || cmdable) {
 
     const child_process = require("child_process");
 
-    // currently unused
     app.post("/*@cmd", (req, res) => {
         res.filename = req.params[0];
 
@@ -416,7 +417,6 @@ if (shellable || cmdable) {
         }
 
         child_process.exec(cmd, {
-            shell: shell,
             cwd: relative(res.filename),
             timeout: 60 * 1000,
         }, (err, stdout, stderr) => {
@@ -431,7 +431,7 @@ if (shellable || cmdable) {
             }));
         });
     });
-    
+
     const pty = require("node-pty");
     const WebSocket = require("ws");
 
@@ -527,7 +527,7 @@ app.get("/*", (req, res) => {
                     cmdable: cmdable,
                     path: res.filename,
                     files: files,
-                }));    
+                }));
             }).catch((err) => {
                 res.render("list", flashify(req, {
                     shellable: shellable,

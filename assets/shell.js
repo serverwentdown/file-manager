@@ -1,32 +1,33 @@
 /* jshint esversion: 6 */
 
 $(document).ready(() => {
-    let $shell = $("#shell");
-    if ($shell.length < 1) {
-        return;
-    }
-    let $close = $("#shell-close");
+	let $shell = $("#shell");
+	if ($shell.length < 1) {
+		return;
+	}
+	let $close = $("#shell-close");
 
-    Terminal.applyAddon(attach);
-    Terminal.applyAddon(fit);
+	const ws = new WebSocket("ws" + (window.location.protocol === "https:" ? "s" : "") + "://" + window.location.host + "/websocket?path=" + encodeURIComponent($shell.data("path")));
 
-    let term = new Terminal();
-    let ws = new WebSocket("ws" + (window.location.protocol === "https:" ? "s" : "") + "://" + window.location.host + "/websocket?path=" + encodeURIComponent($shell.data("path")));
-    term.attach(ws, true, true);
-    term.open($shell[0]);
+	const term = new Terminal();
+	const attachAddon = new AttachAddon.AttachAddon(ws, { bidirectional: true });
+	term.loadAddon(attachAddon);
+	const fitAddon = new FitAddon.FitAddon();
+	term.loadAddon(fitAddon);
+	term.open($shell[0]);
 
 	ws.addEventListener("open", () => {
 
 		// resize
-		term.on("resize", ({ cols, rows }) => {
-			console.log(cols, rows);
+		term.onResize(({ cols, rows }) => {
+			console.debug(cols, rows);
 			const buf = Uint16Array.of(0, cols, rows);
 			ws.send(buf);
 		});
 		$(window).on("resize", () => {
-			term.fit();
+			fitAddon.fit();
 		});
-		term.fit();
+		fitAddon.fit();
 
 		// close
 		let closeTimeout = null;
@@ -44,13 +45,13 @@ $(document).ready(() => {
 				window.location.pathname = window.location.pathname.replace("@shell", "");
 			}, 2000);
 		});
-		term.on("data", () => {
+		term.onData(() => {
 			if (closeTimeout != null) {
 				clearTimeout(closeTimeout);
 				term.write("\r\nkeyboard input detected. timeout canceled");
 				closeTimeout = null;
 			}
 		});
-	
+
 	});
 });
