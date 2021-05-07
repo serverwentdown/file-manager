@@ -36,7 +36,7 @@ app.engine("handlebars", hbs({
     helpers: {
 		either: (a, b, options) => {
 			if (a || b) {
-				return options.fn();
+				return options.fn(this);
 			}
 		},
 		filesize: filesize,

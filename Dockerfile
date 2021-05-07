@@ -1,16 +1,16 @@
-FROM node:9-stretch
+FROM node:16-buster
 
 RUN apt-get update \
-    && apt-get install -y build-essential zip unzip \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y \
+		build-essential zip unzip \
+    && apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
 
-COPY . /src
-
-RUN cd /src \
-    && yarn install \
-    && yarn cache clean
+COPY . /usr/local/share/file-manager
+RUN cd /usr/local/share/file-manager \
+	&& npm install .
 
 VOLUME /data
 WORKDIR /data
 
-CMD ["node", "/src/index.js"]
+CMD ["node", "/usr/local/share/file-manager/index.js"]
