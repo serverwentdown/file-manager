@@ -21,7 +21,7 @@
     "octicons": "^8.5.0",
     "rimraf": "^3.0.2",
     "thirty-two": "^1.0.2",
-    "ws": "^7.4.5",
+    "ws": "^7.4.6",
     "xterm": "^4.11.0",
     "xterm-addon-attach": "^0.6.0",
     "xterm-addon-fit": "^0.5.0"
