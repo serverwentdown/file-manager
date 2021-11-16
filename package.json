@@ -1,7 +1,7 @@
 {
   "name": "file-manager",
   "description": "A simple file manager",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "format": "prettier --write .",
     "start": "node index.js"
