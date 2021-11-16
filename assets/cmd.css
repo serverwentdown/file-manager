@@ -1,7 +1,7 @@
 .cmd {
-	word-wrap: break-word;
+  word-wrap: break-word;
 }
 pre {
-	background-color: #eee;
-	min-height: 1.5em;
+  background-color: #eee;
+  min-height: 1.5em;
 }

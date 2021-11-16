@@ -2,8 +2,12 @@
   "name": "file-manager",
   "description": "A simple file manager",
   "version": "0.1.0",
+  "scripts": {
+    "format": "prettier --write .",
+    "start": "node index.js"
+  },
   "bin": {
-    "file-manager": "./index.js"
+    "file-manager": "index.js"
   },
   "dependencies": {
     "archiver": "^5.3.0",
@@ -12,9 +16,9 @@
     "connect-busboy": "^0.0.2",
     "connect-flash": "^0.1.1",
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.2",
-    "express-session": "^1.17.1",
-    "filesize": "^6.3.0",
+    "express-handlebars": "^6.0.1",
+    "express-session": "^1.17.2",
+    "filesize": "^8.0.6",
     "jquery": "^3.6.0",
     "node-pty": "^0.10.1",
     "notp": "^2.0.3",
@@ -25,5 +29,8 @@
     "xterm": "^4.11.0",
     "xterm-addon-attach": "^0.6.0",
     "xterm-addon-fit": "^0.5.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1"
   }
 }

@@ -1,22 +1,21 @@
 .input-group-digits .form-control {
-	font-size: 2rem;
-	padding: 0.5rem 0;
+  font-size: 2rem;
+  padding: 0.5rem 0;
 
-	width: 2.75rem;
-	text-align: center;
-	font-weight: 300;
+  width: 2.75rem;
+  text-align: center;
+  font-weight: 300;
 }
 
-.input-group-digits input[type=number] {
-	-moz-appearance: textfield;
+.input-group-digits input[type="number"] {
+  -moz-appearance: textfield;
 }
-.input-group-digits input[type=number]::-webkit-inner-spin-button, 
-.input-group-digits input[type=number]::-webkit-outer-spin-button { 
-	-webkit-appearance: none; 
-	margin: 0; 
+.input-group-digits input[type="number"]::-webkit-inner-spin-button,
+.input-group-digits input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .login {
-	width: 19.2em;
+  width: 19.2em;
 }
-
