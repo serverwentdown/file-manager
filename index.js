@@ -27,8 +27,8 @@ const handlebars = require("handlebars");
 
 const port = +process.env.PORT || 8080;
 
-let app = express();
-let http = app.listen(port);
+const app = express();
+const http = app.listen(port);
 
 app.set("views", path.join(__dirname, "views"));
 app.engine(
@@ -174,6 +174,24 @@ function flashify(req, obj) {
   obj.isloginenabled = !!KEY;
   return obj;
 }
+
+app.use((req, res, next) => {
+  if (req.method === "GET") {
+    return next();
+  }
+  let sourceHost = null;
+  if (req.headers.origin) {
+    sourceHost = new URL(req.headers.origin).host;
+  } else if (req.headers.referer) {
+    sourceHost = new URL(req.headers.referer).host;
+  }
+  if (sourceHost !== req.headers.host) {
+    throw new Error(
+      "Origin or Referer header does not match or is missing. Request has been blocked to prevent CSRF"
+    );
+  }
+  next();
+});
 
 app.all("/*", (req, res, next) => {
   res.filename = req.params[0];
