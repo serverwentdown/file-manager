@@ -14,6 +14,7 @@ A basic node.js file manager.
   - [ ] Bulk file uploads
   - [ ] Large file uploads (sharded)
 - [x] File/folder renaming
+- [x] Previews for small image files
 - [x] Bulk file/folder selection
   - [x] Delete
     - [x] Recursive directory delete
