@@ -22,7 +22,7 @@ const rimraf = require("rimraf");
 const path = require("path");
 
 const filesize = require("filesize");
-const octicons = require("octicons");
+const octicons = require("@primer/octicons");
 const handlebars = require("handlebars");
 
 const port = +process.env.PORT || 8080;
@@ -79,7 +79,7 @@ app.use(
 );
 app.use(
   "/@assets/octicons",
-  express.static(path.join(__dirname, "node_modules/octicons/build"))
+  express.static(path.join(__dirname, "node_modules/@primer/octicons/build"))
 );
 app.use(
   "/@assets/jquery",
@@ -514,7 +514,7 @@ if (shellable || cmdable) {
     });
     socket.on("message", (data) => {
       // special messages should decode to Buffers
-      if (Buffer.isBuffer(data)) {
+      if (data.length == 6) {
         switch (data.readUInt16BE(0)) {
           case 0:
             term.resize(data.readUInt16BE(1), data.readUInt16BE(2));

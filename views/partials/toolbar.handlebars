@@ -3,12 +3,12 @@
 		<div class="d-flex">
 			<div class="btn-group me-2" role="group">
 				<a class="btn btn-primary" href="@upload" data-bs-toggle="modal" data-bs-target="#upload" title="Upload a file" data-bs-placement="top">
-					{{octicon "cloud-upload"}}
-					<span class="d-none d-sm-inline">Upload</span>
+					{{octicon "upload"}}
+					<span class="d-none d-sm-inline align-text-bottom">Upload</span>
 				</a>
 				<a class="btn btn-secondary" href="@mkdir" data-bs-toggle="modal" data-bs-target="#mkdir" title="Create a new folder" data-bs-placement="top">
 					{{octicon "file-directory"}}
-					<span class="d-none d-md-inline">New folder</span>
+					<span class="d-none d-md-inline align-text-bottom">New folder</span>
 				</a>
 			</div>
 			{{#either cmdable shellable}}
@@ -16,13 +16,13 @@
 				{{#if cmdable}}
 				<a class="btn btn-info" href="@cmd" data-bs-toggle="modal" data-bs-target="#cmd" title="Run a command" data-bs-placement="top">
 					{{octicon "terminal"}}
-					<span class="d-none d-lg-inline">Run command</span>
+					<span class="d-none d-lg-inline align-text-bottom">Run command</span>
 				</a>
 				{{/if}}
 				{{#if shellable}}
 				<a class="btn btn-warning" href="@shell" title="Open a new shell" data-bs-placement="top">
 					{{octicon "terminal"}}
-					<span class="d-none d-md-inline">Open shell</span>
+					<span class="d-none d-md-inline align-text-bottom">Open shell</span>
 				</a>
 				{{/if}}
 			</div>
@@ -30,13 +30,13 @@
 			<div class="btn-group me-2" role="group">
 				<a class="btn btn-success" href="@download" data-bs-toggle="modal" data-bs-target="#download" title="Download file archive" data-bs-placement="top">
 					{{octicon "file-zip"}}
-					<span class="d-none d-md-inline">Download</span>
+					<span class="d-none d-md-inline align-text-bottom">Download</span>
 				</a>
 			</div>
 			<div class="btn-group me-2" role="group">
 				<a class="btn btn-danger" href="@delete" data-bs-toggle="modal" data-bs-target="#delete" title="Delete selected files" data-bs-placement="top">
-					{{octicon "trashcan"}}
-					<span class="d-none d-md-inline">Delete</span>
+					{{octicon "trash"}}
+					<span class="d-none d-md-inline align-text-bottom">Delete</span>
 				</a>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 			<div class="btn-group ms-2" role="group">
 				<a class="btn btn-warning" href="./" title="Refresh list" data-bs-placement="top">
 					{{octicon "sync"}}
-					<span class="d-none d-lg-inline">Refresh</span>
+					<span class="d-none d-lg-inline align-text-bottom">Refresh</span>
 				</a>
 			</div>
 		</div>
