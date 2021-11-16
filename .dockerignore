@@ -4,4 +4,5 @@ node_modules/
 .github/
 .gitignore
 Dockerfile*
+LICENSE
 README.md
