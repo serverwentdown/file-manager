@@ -13,10 +13,10 @@ A basic node.js file manager.
 - [x] File uploads
   - [ ] Bulk file uploads
   - [ ] Large file uploads (sharded)
-- [ ] File/folder renaming
+- [x] File/folder renaming
 - [x] Bulk file/folder selection
   - [x] Delete
-    - [ ] Recursive directory delete
+    - [x] Recursive directory delete
   - [ ] Move
   - [ ] Copy
   - [x] Download archive

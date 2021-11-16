@@ -453,6 +453,57 @@ app.get("/*@download", (req, res) => {
     });
 });
 
+app.post("/*@rename", (req, res) => {
+  res.filename = req.params[0];
+
+  let files = JSON.parse(req.body.files);
+  if (!files || !files.map) {
+    req.flash("error", "No files selected.");
+    res.redirect("back");
+    return;
+  }
+
+  new Promise((resolve, reject) => {
+    fs.access(relative(res.filename), fs.constants.W_OK, (err) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve();
+    });
+  })
+    .then(() => {
+      let promises = files.map((f) => {
+        return new Promise((resolve, reject) => {
+          fs.rename(
+            relative(res.filename, f.original),
+            relative(res.filename, f.new),
+            (err) => {
+              if (err) {
+                return reject(err);
+              }
+              resolve();
+            }
+          );
+        });
+      });
+      Promise.all(promises)
+        .then(() => {
+          req.flash("success", "Files renamed. ");
+          res.redirect("back");
+        })
+        .catch((err) => {
+          console.warn(err);
+          req.flash("error", "Unable to rename some files: " + err);
+          res.redirect("back");
+        });
+    })
+    .catch((err) => {
+      console.warn(err);
+      req.flash("error", err.toString());
+      res.redirect("back");
+    });
+});
+
 const shellable = process.env.SHELL != "false" && process.env.SHELL;
 const cmdable = process.env.CMD != "false" && process.env.CMD;
 if (shellable || cmdable) {
