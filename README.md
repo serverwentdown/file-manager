@@ -1,7 +1,6 @@
-
 # file-manager
 
-A basic node.js file manager. 
+A basic node.js file manager.
 
 ## Features
 
@@ -24,6 +23,21 @@ A basic node.js file manager.
   - [ ] Change permissions
 - [x] Remote commands
 
+## Usage
+
+For users who prefer Docker:
+
+```zsh
+docker run --rm -it -v $PWD:/data -p 8080:8080 serverwentdown/file-manager
+```
+
+Or if you have Node.js installed:
+
+```zsh
+npm install -g https://github.com/serverwentdown/file-manager.git
+file-manager
+```
+
 ## Screenshots
 
 These screenshots are not up-to-date.
@@ -37,22 +51,6 @@ These screenshots are not up-to-date.
 ![](https://ambrose.makerforce.io/file-manager/rm1.png)
 
 ![](https://ambrose.makerforce.io/file-manager/dl1.png)
-
-## Usage
-
-```zsh
-docker run --rm -it -v $PWD:/data -p 8080:8080 serverwentdown/file-manager
-```
-
-OR
-
-```zsh
-git clone https://github.com/serverwentdown/file-manager.git ~/path/to/file-manager
-node ~/path/to/file-manager/index.js
-# or
-npm i -g https://github.com/serverwentdown/file-manager.git
-file-manager
-```
 
 ## Options
 
