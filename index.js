@@ -6,7 +6,6 @@
 
 const express = require("express");
 const { engine: hbs } = require("express-handlebars");
-const bodyparser = require("body-parser");
 const session = require("express-session");
 const busboy = require("connect-busboy");
 const flash = require("connect-flash");
@@ -109,8 +108,10 @@ app.use(
 );
 app.use(flash());
 app.use(busboy());
-app.use(bodyparser.urlencoded());
-
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 // AUTH
 
 const KEY = process.env.KEY
@@ -403,7 +404,7 @@ app.get("/*@download", (req, res) => {
   let files = null;
   try {
     files = JSON.parse(req.query.files);
-  } catch (e) {}
+  } catch (e) { }
   if (!files || !files.map) {
     req.flash("error", "No files selected.");
     res.redirect("back");
