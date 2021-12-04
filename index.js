@@ -84,15 +84,14 @@ assets.forEach(asset => {
 app.use(
   session({
     secret: process.env.SESSION_KEY || "meowmeow",
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
   })
 );
 app.use(flash());
 app.use(busboy());
-app.use(express.json());
 app.use(express.urlencoded({
-  extended: true
+  extended: false
 }));
 // AUTH
 
