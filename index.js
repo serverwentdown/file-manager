@@ -104,6 +104,8 @@ app.use(
 app.use(
   session({
     secret: process.env.SESSION_KEY || "meowmeow",
+    resave: true,
+    saveUninitialized: true
   })
 );
 app.use(flash());
