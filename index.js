@@ -10,7 +10,7 @@ const session = require("express-session");
 const busboy = require("connect-busboy");
 const flash = require("connect-flash");
 const querystring = require("querystring");
-
+const assets = require("./assets");
 const archiver = require("archiver");
 
 const notp = require("notp");
@@ -72,30 +72,16 @@ app.engine(
 app.set("view engine", "handlebars");
 
 app.use("/@assets", express.static(path.join(__dirname, "assets")));
-app.use(
-  "/@assets/bootstrap",
-  express.static(path.join(__dirname, "node_modules/bootstrap/dist"))
-);
-app.use(
-  "/@assets/octicons",
-  express.static(path.join(__dirname, "node_modules/@primer/octicons/build"))
-);
-app.use(
-  "/@assets/jquery",
-  express.static(path.join(__dirname, "node_modules/jquery/dist"))
-);
-app.use(
-  "/@assets/filesize",
-  express.static(path.join(__dirname, "node_modules/filesize/lib"))
-);
-app.use(
-  "/@assets/xterm",
-  express.static(path.join(__dirname, "node_modules/xterm"))
-);
-app.use(
-  "/@assets/xterm-addon-attach",
-  express.static(path.join(__dirname, "node_modules/xterm-addon-attach"))
-);
+// init assets
+assets.forEach(asset => {
+  const { path: url, modulePath } = asset;
+  app.use(
+    `/@assets/${url}`,
+    express.static(path.join(__dirname, `node_modules/${modulePath}`))
+  );
+})
+
+
 app.use(
   "/@assets/xterm-addon-fit",
   express.static(path.join(__dirname, "node_modules/xterm-addon-fit"))
