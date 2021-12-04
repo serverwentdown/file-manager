@@ -4,7 +4,8 @@
   "version": "0.2.4",
   "scripts": {
     "format": "prettier --write .",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "bin": {
     "file-manager": "index.js"
@@ -31,6 +32,7 @@
     "xterm-addon-fit": "^0.5.0"
   },
   "devDependencies": {
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "nodemon": "^1.18.4"
   }
 }
