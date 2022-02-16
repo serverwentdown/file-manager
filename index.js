@@ -73,26 +73,28 @@ app.set("view engine", "handlebars");
 
 app.use("/@assets", express.static(path.join(__dirname, "assets")));
 // init assets
-assets.forEach(asset => {
+assets.forEach((asset) => {
   const { path: url, modulePath } = asset;
   app.use(
     `/@assets/${url}`,
     express.static(path.join(__dirname, `node_modules/${modulePath}`))
   );
-})
+});
 
 app.use(
   session({
     secret: process.env.SESSION_KEY || "meowmeow",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
   })
 );
 app.use(flash());
 app.use(busboy());
-app.use(express.urlencoded({
-  extended: false
-}));
+app.use(
+  express.urlencoded({
+    extended: false,
+  })
+);
 // AUTH
 
 const KEY = process.env.KEY
@@ -385,7 +387,7 @@ app.get("/*@download", (req, res) => {
   let files = null;
   try {
     files = JSON.parse(req.query.files);
-  } catch (e) { }
+  } catch (e) {}
   if (!files || !files.map) {
     req.flash("error", "No files selected.");
     res.redirect("back");
