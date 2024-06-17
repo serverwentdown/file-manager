@@ -25,7 +25,7 @@
     "notp": "^2.0.3",
     "rimraf": "^3.0.2",
     "thirty-two": "^1.0.2",
-    "ws": "^8.5.0",
+    "ws": "^8.17.1",
     "xterm": "^4.15.0",
     "xterm-addon-attach": "^0.6.0",
     "xterm-addon-fit": "^0.5.0"
